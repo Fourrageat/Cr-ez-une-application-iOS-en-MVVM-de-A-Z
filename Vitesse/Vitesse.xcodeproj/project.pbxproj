@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F43C17E02EDF7B5C009D9423 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* ContentView.swift */; };
+		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
+		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
+		F43C17E52EDF7B65009D9423 /* VitesseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17E32EDF7B65009D9423 /* VitesseTests.swift */; };
+		F43C17E92EDF7B6A009D9423 /* VitesseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17E62EDF7B6A009D9423 /* VitesseUITests.swift */; };
+		F43C17EA2EDF7B6A009D9423 /* VitesseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17E72EDF7B6A009D9423 /* VitesseUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F43C17C02EDF790A009D9423 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,25 +36,13 @@
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F43C17DD2EDF7B5C009D9423 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseApp.swift; sourceTree = "<group>"; };
+		F43C17E32EDF7B65009D9423 /* VitesseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseTests.swift; sourceTree = "<group>"; };
+		F43C17E62EDF7B6A009D9423 /* VitesseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseUITests.swift; sourceTree = "<group>"; };
+		F43C17E72EDF7B6A009D9423 /* VitesseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		F43C17B42EDF7909009D9423 /* Vitesse */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Vitesse;
-			sourceTree = "<group>";
-		};
-		F43C17C22EDF790A009D9423 /* VitesseTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VitesseTests;
-			sourceTree = "<group>";
-		};
-		F43C17CC2EDF790A009D9423 /* VitesseUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = VitesseUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F43C17AF2EDF7909009D9423 /* Frameworks */ = {
@@ -75,9 +72,9 @@
 		F43C17A92EDF7909009D9423 = {
 			isa = PBXGroup;
 			children = (
-				F43C17B42EDF7909009D9423 /* Vitesse */,
-				F43C17C22EDF790A009D9423 /* VitesseTests */,
-				F43C17CC2EDF790A009D9423 /* VitesseUITests */,
+				F43C17DF2EDF7B5C009D9423 /* Vitesse */,
+				F43C17E42EDF7B65009D9423 /* VitesseTests */,
+				F43C17E82EDF7B6A009D9423 /* VitesseUITests */,
 				F43C17B32EDF7909009D9423 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +87,33 @@
 				F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F43C17DF2EDF7B5C009D9423 /* Vitesse */ = {
+			isa = PBXGroup;
+			children = (
+				F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */,
+				F43C17DD2EDF7B5C009D9423 /* ContentView.swift */,
+				F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */,
+			);
+			path = Vitesse;
+			sourceTree = "<group>";
+		};
+		F43C17E42EDF7B65009D9423 /* VitesseTests */ = {
+			isa = PBXGroup;
+			children = (
+				F43C17E32EDF7B65009D9423 /* VitesseTests.swift */,
+			);
+			path = VitesseTests;
+			sourceTree = "<group>";
+		};
+		F43C17E82EDF7B6A009D9423 /* VitesseUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F43C17E62EDF7B6A009D9423 /* VitesseUITests.swift */,
+				F43C17E72EDF7B6A009D9423 /* VitesseUITestsLaunchTests.swift */,
+			);
+			path = VitesseUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -106,9 +130,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				F43C17B42EDF7909009D9423 /* Vitesse */,
 			);
 			name = Vitesse;
 			packageProductDependencies = (
@@ -130,9 +151,6 @@
 			dependencies = (
 				F43C17C12EDF790A009D9423 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				F43C17C22EDF790A009D9423 /* VitesseTests */,
-			);
 			name = VitesseTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +170,6 @@
 			);
 			dependencies = (
 				F43C17CB2EDF790A009D9423 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				F43C17CC2EDF790A009D9423 /* VitesseUITests */,
 			);
 			name = VitesseUITests;
 			packageProductDependencies = (
@@ -212,6 +227,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +252,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43C17E02EDF7B5C009D9423 /* ContentView.swift in Sources */,
+				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43C17E52EDF7B65009D9423 /* VitesseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,6 +269,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43C17E92EDF7B6A009D9423 /* VitesseUITests.swift in Sources */,
+				F43C17EA2EDF7B6A009D9423 /* VitesseUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
