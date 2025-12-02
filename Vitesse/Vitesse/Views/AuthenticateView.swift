@@ -1,0 +1,226 @@
+//
+//  ContentView.swift
+//  Vitesse
+//
+//  Created by Baptiste Fourrageat on 02/12/2025.
+//
+
+import SwiftUI
+
+struct LoginView: View {
+    @State private var email: String = ""
+    @State private var password: String = ""
+    
+    @FocusState private var focusedField: Field?
+    @State private var isAppeared: Bool = false
+    @State private var isSigningIn: Bool = false
+    @State private var showError: Bool = false
+
+    private enum Field { case email, password }
+
+    var body: some View {
+        ZStack {
+            // Background gradient
+            LinearGradient(colors: [
+                Color.accentColor.opacity(0.25),
+                Color.blue.opacity(0.15),
+                Color(.systemBackground)
+            ], startPoint: .topLeading, endPoint: .bottomTrailing)
+            .ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                Text("Vitesse")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.top, 40)
+                Spacer(minLength: 0)
+                // Card container
+                VStack(spacing: 16) {
+                    // Email field
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "envelope.fill")
+                                .foregroundStyle(focusedField == .email ? Color.accentColor : .secondary)
+                                .scaleEffect(focusedField == .email ? 1.05 : 1)
+                                .animation(.easeInOut(duration: 0.2), value: focusedField)
+                            ZStack(alignment: .leading) {
+                                Text("Email")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .offset(y: (email.isEmpty && focusedField != .email) ? 0 : -18)
+                                    .scaleEffect((email.isEmpty && focusedField != .email) ? 1 : 0.9, anchor: .leading)
+                                    .opacity(0.9)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: email)
+                                TextField("", text: $email)
+                                    .textContentType(.emailAddress)
+                                    .keyboardType(.emailAddress)
+                                    .autocapitalization(.none)
+                                    .disableAutocorrection(true)
+                                    .focused($focusedField, equals: .email)
+                                    .submitLabel(.next)
+                            }
+                        }
+                        .padding(14)
+                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(borderColorForEmail, lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
+                    }
+
+                    // Password field
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "lock.fill")
+                                .foregroundStyle(focusedField == .password ? Color.accentColor : .secondary)
+                                .scaleEffect(focusedField == .password ? 1.05 : 1)
+                                .animation(.easeInOut(duration: 0.2), value: focusedField)
+                            ZStack(alignment: .leading) {
+                                Text("Password")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .offset(y: (password.isEmpty && focusedField != .password) ? 0 : -18)
+                                    .scaleEffect((password.isEmpty && focusedField != .password) ? 1 : 0.9, anchor: .leading)
+                                    .opacity(0.9)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: password)
+                                SecureField("", text: $password)
+                                    .textContentType(.password)
+                                    .focused($focusedField, equals: .password)
+                                    .submitLabel(.go)
+                            }
+                        }
+                        .padding(14)
+                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(borderColorForPassword, lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
+                    }
+
+                    // Sign In button
+                    Button {
+                        signIn()
+                    } label: {
+                        HStack {
+                            if isSigningIn {
+                                ProgressView()
+                                    .tint(.white)
+                            }
+                            Text(isSigningIn ? "Signing In…" : "Sign In")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(isFormValid ? Color.accentColor : Color.accentColor.opacity(0.5))
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .shadow(color: Color.accentColor.opacity(isFormValid ? 0.25 : 0.0), radius: 14, x: 0, y: 8)
+                        .scaleEffect(isSigningIn ? 0.98 : 1)
+                        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSigningIn)
+                    }
+                    .disabled(!isFormValid || isSigningIn)
+                    .accessibilityLabel("Se connecter")
+
+                    // Register button
+                    Button {
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                            // Action d'inscription
+                        }
+                    } label: {
+                        Text("Register")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .strokeBorder(Color.accentColor, lineWidth: 1)
+                            )
+                    }
+                    .accessibilityLabel("S'inscrire")
+
+                    if showError {
+                        Text("Identifiants invalides. Réessayez.")
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                            .transition(.opacity.combined(with: .move(edge: .top)))
+                    }
+                }
+                .padding(20)
+                .background(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                        .shadow(color: Color.black.opacity(0.08), radius: 20, x: 0, y: 12)
+                )
+                .padding(.horizontal)
+                .opacity(isAppeared ? 1 : 0)
+                .offset(y: isAppeared ? 0 : 20)
+                .animation(.spring(response: 0.5, dampingFraction: 0.85), value: isAppeared)
+                .offset(x: shakeOffset)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal)
+        }
+        .onAppear {
+            isAppeared = true
+        }
+    }
+
+    private var isFormValid: Bool {
+        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !password.isEmpty
+    }
+
+    private var borderColorForEmail: Color {
+        if showError { return .red }
+        return focusedField == .email ? .accentColor : Color.secondary.opacity(0.3)
+    }
+
+    private var borderColorForPassword: Color {
+        if showError { return .red }
+        return focusedField == .password ? .accentColor : Color.secondary.opacity(0.3)
+    }
+
+    private func signIn() {
+        guard isFormValid else {
+            withAnimation(.default) { showError = true }
+            shake()
+            return
+        }
+        showError = false
+        isSigningIn = true
+        // Simulate async sign-in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                isSigningIn = false
+                // Flip to success or show error example
+                let success = Bool.random()
+                if !success {
+                    showError = true
+                    shake()
+                }
+            }
+        }
+    }
+
+    @State private var shakeOffset: CGFloat = 0
+    private func shake() {
+        let base: [CGFloat] = [0, -10, 10, -8, 8, -5, 5, 0]
+        var delay: Double = 0
+        for value in base {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
+                    shakeOffset = value
+                }
+            }
+            delay += 0.04
+        }
+    }
+}
+
+#Preview {
+    LoginView()
+}
