@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct SignInView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -20,21 +20,10 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            // Background gradient
-            LinearGradient(colors: [
-                Color.accentColor.opacity(0.25),
-                Color.blue.opacity(0.15),
-                Color(.systemBackground)
-            ], startPoint: .topLeading, endPoint: .bottomTrailing)
-            .ignoresSafeArea()
+            // App-wide background
+            AppBackground()
 
-            VStack(spacing: 24) {
-                Text("Vitesse")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.top, 40)
-                Spacer(minLength: 0)
+            VStack() {
                 // Card container
                 VStack(spacing: 16) {
                     // Email field
@@ -149,18 +138,7 @@ struct LoginView: View {
                             .transition(.opacity.combined(with: .move(edge: .top)))
                     }
                 }
-                .padding(20)
-                .background(
-                    RoundedRectangle(cornerRadius: 24, style: .continuous)
-                        .fill(.ultraThinMaterial)
-                        .shadow(color: Color.black.opacity(0.08), radius: 20, x: 0, y: 12)
-                )
-                .padding(.horizontal)
-                .opacity(isAppeared ? 1 : 0)
-                .offset(y: isAppeared ? 0 : 20)
-                .animation(.spring(response: 0.5, dampingFraction: 0.85), value: isAppeared)
-                .offset(x: shakeOffset)
-                Spacer(minLength: 0)
+                .cardContainer(isAppeared: isAppeared, shakeOffset: shakeOffset)
             }
             .padding(.horizontal)
         }
@@ -222,5 +200,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    SignInView()
 }

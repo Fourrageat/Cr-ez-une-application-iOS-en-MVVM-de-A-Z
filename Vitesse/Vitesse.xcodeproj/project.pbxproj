@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F43C17E02EDF7B5C009D9423 /* AuthenticateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* AuthenticateView.swift */; };
+		F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* SignInView.swift */; };
 		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
 		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
+		F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C662EE079C300E79D35 /* HTTPMethod.swift */; };
+		F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C672EE079C300E79D35 /* URLRequest.swift */; };
+		F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C6D2EE07EB600E79D35 /* AppBackground.swift */; };
+		F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C702EE0803F00E79D35 /* CardContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,8 +38,12 @@
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F43C17DD2EDF7B5C009D9423 /* AuthenticateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateView.swift; sourceTree = "<group>"; };
+		F43C17DD2EDF7B5C009D9423 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitesseApp.swift; sourceTree = "<group>"; };
+		F4907C662EE079C300E79D35 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		F4907C672EE079C300E79D35 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		F4907C6D2EE07EB600E79D35 /* AppBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
+		F4907C702EE0803F00E79D35 /* CardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +93,10 @@
 		F43C17DF2EDF7B5C009D9423 /* Vitesse */ = {
 			isa = PBXGroup;
 			children = (
-				F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */,
+				F4907C6B2EE079C900E79D35 /* Models */,
 				F4907C652EDF83B900E79D35 /* Views */,
+				F4907C6C2EE07A4400E79D35 /* ViewModels */,
+				F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */,
 				F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */,
 			);
 			path = Vitesse;
@@ -102,9 +112,43 @@
 		F4907C652EDF83B900E79D35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F43C17DD2EDF7B5C009D9423 /* AuthenticateView.swift */,
+				F4907C6F2EE0801000E79D35 /* Shared */,
+				F43C17DD2EDF7B5C009D9423 /* SignInView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F4907C682EE079C300E79D35 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				F4907C662EE079C300E79D35 /* HTTPMethod.swift */,
+				F4907C672EE079C300E79D35 /* URLRequest.swift */,
+			);
+			path = HTTPClient;
+			sourceTree = "<group>";
+		};
+		F4907C6B2EE079C900E79D35 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F4907C682EE079C300E79D35 /* HTTPClient */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F4907C6C2EE07A4400E79D35 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F4907C6F2EE0801000E79D35 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F4907C702EE0803F00E79D35 /* CardContainer.swift */,
+				F4907C6D2EE07EB600E79D35 /* AppBackground.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,8 +287,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F43C17E02EDF7B5C009D9423 /* AuthenticateView.swift in Sources */,
+				F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */,
+				F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */,
 				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
+				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
+				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,
+				F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
