@@ -106,7 +106,7 @@ struct SignInView: View {
                         .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSigningIn)
                     }
                     .disabled(!isFormValid || isSigningIn)
-                    .accessibilityLabel("Se connecter")
+                    .accessibilityLabel("Login")
 
                     // Register button
                     Button {
@@ -122,10 +122,10 @@ struct SignInView: View {
                                     .strokeBorder(Color.accentColor, lineWidth: 1)
                             )
                     }
-                    .accessibilityLabel("S'inscrire")
+                    .accessibilityLabel("Register")
 
                     if showError {
-                        Text("Identifiants invalides. Réessayez.")
+                        Text("Bad credentials. Try again.")
                             .font(.footnote)
                             .foregroundStyle(.red)
                             .transition(.opacity.combined(with: .move(edge: .top)))
