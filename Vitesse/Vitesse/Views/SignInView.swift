@@ -15,6 +15,7 @@ struct SignInView: View {
     @State private var isAppeared: Bool = false
     @State private var isSigningIn: Bool = false
     @State private var showError: Bool = false
+    @State private var isKeyboardVisible: Bool = false
 
     private enum Field { case email, password }
 
@@ -29,10 +30,6 @@ struct SignInView: View {
                     // Email field
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 10) {
-                            Image(systemName: "envelope.fill")
-                                .foregroundStyle(focusedField == .email ? Color.accentColor : .secondary)
-                                .scaleEffect(focusedField == .email ? 1.05 : 1)
-                                .animation(.easeInOut(duration: 0.2), value: focusedField)
                             ZStack(alignment: .leading) {
                                 Text("Email")
                                     .font(.caption)
@@ -63,10 +60,6 @@ struct SignInView: View {
                     // Password field
                     VStack(alignment: .leading, spacing: 6) {
                         HStack(spacing: 10) {
-                            Image(systemName: "lock.fill")
-                                .foregroundStyle(focusedField == .password ? Color.accentColor : .secondary)
-                                .scaleEffect(focusedField == .password ? 1.05 : 1)
-                                .animation(.easeInOut(duration: 0.2), value: focusedField)
                             ZStack(alignment: .leading) {
                                 Text("Password")
                                     .font(.caption)
@@ -142,8 +135,34 @@ struct SignInView: View {
             }
             .padding(.horizontal)
         }
+        .contentShape(Rectangle())
+        .overlay(alignment: .top) {
+            VStack(spacing: 8) {
+                Image(systemName: "bolt.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(Color.accentColor)
+                Text("Welcome on Vitesse")
+                    .font(.title2).bold()
+                    .foregroundStyle(.primary)
+            }
+            .opacity(isKeyboardVisible ? 0 : 1)
+            .offset(y: isKeyboardVisible ? -20 : 0)
+            .animation(.easeInOut(duration: 0.25), value: isKeyboardVisible)
+            .padding(.top, 40)
+            .padding(.horizontal)
+        }
         .onAppear {
             isAppeared = true
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+                withAnimation(.easeInOut(duration: 0.25)) { isKeyboardVisible = true }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                withAnimation(.easeInOut(duration: 0.25)) { isKeyboardVisible = false }
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         }
     }
 
