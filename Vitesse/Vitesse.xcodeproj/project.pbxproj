@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
 		F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* SignInView.swift */; };
 		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
 		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				F43C17DF2EDF7B5C009D9423 /* Vitesse */,
-				F43C17E42EDF7B65009D9423 /* VitesseTests */,
 				F43C17B32EDF7909009D9423 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,18 +103,12 @@
 			path = Vitesse;
 			sourceTree = "<group>";
 		};
-		F43C17E42EDF7B65009D9423 /* VitesseTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = VitesseTests;
-			sourceTree = "<group>";
-		};
 		F4907C652EDF83B900E79D35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				F4907C6F2EE0801000E79D35 /* Shared */,
 				F43C17DD2EDF7B5C009D9423 /* SignInView.swift */,
+				F425035B2EE09F8E007D79A1 /* RegisterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,6 +285,7 @@
 				F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */,
 				F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */,
 				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
+				F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */,
 				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
 				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,
 				F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */,
