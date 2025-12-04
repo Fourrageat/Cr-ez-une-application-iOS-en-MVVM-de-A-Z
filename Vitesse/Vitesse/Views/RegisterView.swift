@@ -31,52 +31,56 @@ struct RegisterView: View {
                 // Card container
                 VStack(spacing: 16) {
                     
-                    // First name field
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack(spacing: 10) {
-                            ZStack(alignment: .leading) {
-                                Text("First name")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .offset(y: (firstName.isEmpty && focusedField != .firstName) ? 0 : -18)
-                                    .scaleEffect((firstName.isEmpty && focusedField != .firstName) ? 1 : 0.9, anchor: .leading)
-                                    .opacity(0.9)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: firstName)
-                                TextField("", text: $firstName)
-                                    .textContentType(.name)
-                                    .keyboardType(.default)
-                                    .focused($focusedField, equals: .firstName)
-                                    .submitLabel(.next)
+                    HStack {
+                        
+                        
+                        // First name field
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack(spacing: 10) {
+                                ZStack(alignment: .leading) {
+                                    Text("First name")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .offset(y: (firstName.isEmpty && focusedField != .firstName) ? 0 : -18)
+                                        .scaleEffect((firstName.isEmpty && focusedField != .firstName) ? 1 : 0.9, anchor: .leading)
+                                        .opacity(0.9)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: firstName)
+                                    TextField("", text: $firstName)
+                                        .textContentType(.name)
+                                        .keyboardType(.default)
+                                        .focused($focusedField, equals: .firstName)
+                                        .submitLabel(.next)
+                                }
                             }
+                            .padding(14)
+                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
                         }
-                        .padding(14)
-                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                        .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
-                    }
-                    
-                    // Last name field
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack(spacing: 10) {
-                            ZStack(alignment: .leading) {
-                                Text("Last name")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .offset(y: (lastName.isEmpty && focusedField != .lastName) ? 0 : -18)
-                                    .scaleEffect((lastName.isEmpty && focusedField != .lastName) ? 1 : 0.9, anchor: .leading)
-                                    .opacity(0.9)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: lastName)
-                                TextField("", text: $lastName)
-                                    .textContentType(.name)
-                                    .keyboardType(.default)
-                                    .focused($focusedField, equals: .lastName)
-                                    .submitLabel(.next)
+                        
+                        // Last name field
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack(spacing: 10) {
+                                ZStack(alignment: .leading) {
+                                    Text("Last name")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                        .offset(y: (lastName.isEmpty && focusedField != .lastName) ? 0 : -18)
+                                        .scaleEffect((lastName.isEmpty && focusedField != .lastName) ? 1 : 0.9, anchor: .leading)
+                                        .opacity(0.9)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: lastName)
+                                    TextField("", text: $lastName)
+                                        .textContentType(.name)
+                                        .keyboardType(.default)
+                                        .focused($focusedField, equals: .lastName)
+                                        .submitLabel(.next)
+                                }
                             }
+                            .padding(14)
+                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                            .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
                         }
-                        .padding(14)
-                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                        .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
                     }
                     
                     // Email field
@@ -192,7 +196,6 @@ struct RegisterView: View {
                 }
                 .cardContainer(isAppeared: isAppeared, shakeOffset: shakeOffset)
             }
-            .padding(.horizontal)
         }
         .contentShape(Rectangle())
         .overlay(alignment: .top) {
