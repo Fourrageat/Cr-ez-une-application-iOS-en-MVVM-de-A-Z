@@ -1,5 +1,5 @@
 //
-//  CandidatsView.swift
+//  CandidatesView.swift
 //  Vitesse
 //
 //  Created by Baptiste Fourrageat on 04/12/2025.
@@ -27,13 +27,13 @@ struct CandidatesView: View {
     }
 
     var body: some View {
-
         NavigationStack {
             ZStack {
                 AppBackground()
                 content
                     .toolbar { toolbar }
                     .navigationBarBackButtonHidden(true)
+
             }
         }
     }
@@ -41,14 +41,19 @@ struct CandidatesView: View {
     private var content: some View {
         VStack(spacing: 0) {
             searchField
+
             if filteredCandidates.isEmpty {
                 emptyState
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12, pinnedViews: []) {
                         ForEach(filteredCandidates) { candidate in
-                            CandidateCard(candidate: candidate, toggle: toggleFavorite)
-                                .padding(.horizontal)
+                            NavigationLink(destination: CandidateDetailView(candidate: candidate)) {
+                                CandidateCard(candidate: candidate, toggle: toggleFavorite)
+                                    .padding(.horizontal)
+                            }
+                            .tint(.primary)
+                            
                         }
                         .animation(.snappy, value: filteredCandidates)
                     }
@@ -164,7 +169,6 @@ private struct CandidateCard: View {
             }
             .buttonStyle(.plain)
         }
-        
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
@@ -203,4 +207,3 @@ private struct CandidateCard: View {
 
     CandidatesView(candidates: samples)
 }
-
