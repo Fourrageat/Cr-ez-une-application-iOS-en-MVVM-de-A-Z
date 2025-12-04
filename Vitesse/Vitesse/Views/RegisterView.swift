@@ -106,6 +106,10 @@ struct RegisterView: View {
                         }
                         .padding(14)
                         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .stroke(borderColorForEmail, lineWidth: 1)
+                        )
                         .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
                     }
 
@@ -188,7 +192,7 @@ struct RegisterView: View {
                     .accessibilityLabel("Create")
 
                     if showError {
-                        Text("Bad credentials. Try again.")
+                        Text(!isPasswordValid ? "Passwords are different. Try again." : "Unknown error")
                             .font(.footnote)
                             .foregroundStyle(.red)
                             .transition(.opacity.combined(with: .move(edge: .top)))
@@ -200,9 +204,6 @@ struct RegisterView: View {
         .contentShape(Rectangle())
         .overlay(alignment: .top) {
             VStack(spacing: 8) {
-                Image(systemName: "bolt.fill")
-                    .font(.system(size: 40))
-                    .foregroundStyle(Color.accentColor)
                 Text("Register")
                     .font(.title2).bold()
                     .foregroundStyle(.primary)
@@ -232,26 +233,23 @@ struct RegisterView: View {
         !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        isEmailValid &&
         !password.isEmpty &&
         !passwordConfirmation.isEmpty
+    }
+    
+    private var isEmailValid: Bool {
+        let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let predicate = NSPredicate(format: "SELF MATCHES[c] %@", pattern)
+        return predicate.evaluate(with: email.trimmingCharacters(in: .whitespacesAndNewlines))
     }
     
     private var isPasswordValid: Bool {
         password == passwordConfirmation
     }
     
-    private var borderColorForFirstName: Color {
-        if showError { return .red }
-        return focusedField == .firstName ? .accentColor : Color.secondary.opacity(0.3)
-    }
-    
-    private var borderColorForLastName: Color {
-        if showError { return .red }
-        return focusedField == .lastName ? .accentColor : Color.secondary.opacity(0.3)
-    }
-    
     private var borderColorForEmail: Color {
-        if showError { return .red }
+        if !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isEmailValid { return .red }
         return focusedField == .email ? .accentColor : Color.secondary.opacity(0.3)
     }
 
@@ -266,7 +264,7 @@ struct RegisterView: View {
     }
 
     private func create() {
-        guard isFormValid else {
+        guard isFormValid && isPasswordValid else {
             withAnimation(.default) { showError = true }
             shake()
             return
