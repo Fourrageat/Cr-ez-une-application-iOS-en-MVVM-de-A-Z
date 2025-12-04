@@ -20,6 +20,8 @@ struct CandidatesView: View {
     // Runtime data: starts empty as requested
     @State private var candidates: [Candidate] = []
     @State private var search: String = ""
+    @State private var goToEditableCandidatesListView: Bool = false
+    @State private var goToFavoriteCandidatesView: Bool = false
 
     // Initializer to inject initial candidates (useful for previews)
     init(candidates: [Candidate] = []) {
@@ -36,6 +38,7 @@ struct CandidatesView: View {
 
             }
         }
+        
     }
 
     private var content: some View {
@@ -60,6 +63,12 @@ struct CandidatesView: View {
                     .padding(.vertical, 8)
                 }
             }
+        }
+        .navigationDestination(isPresented: $goToEditableCandidatesListView) {
+            EditableCandidatesListView()
+        }
+        .navigationDestination(isPresented: $goToFavoriteCandidatesView) {
+            FavoriteCandidatesView()
         }
     }
 
@@ -104,7 +113,7 @@ struct CandidatesView: View {
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button("Edit") {
-                
+                goToEditableCandidatesListView = true
             }
         }
         ToolbarItem(placement: .title) {
@@ -112,7 +121,7 @@ struct CandidatesView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                // Placeholder for future action
+                goToFavoriteCandidatesView = true
             } label: {
                 Image(systemName: "star")
             }
