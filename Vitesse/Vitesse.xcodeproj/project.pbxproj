@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
+		F425035E2EE1BADD007D79A1 /* CandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035D2EE1BACA007D79A1 /* CandidatesView.swift */; };
+		F42503602EE1D18F007D79A1 /* CandidateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateDetailView.swift */; };
+		F42503622EE1D804007D79A1 /* FavoriteCandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503612EE1D804007D79A1 /* FavoriteCandidatesView.swift */; };
+		F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */; };
 		F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* SignInView.swift */; };
 		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
 		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
@@ -36,6 +40,10 @@
 
 /* Begin PBXFileReference section */
 		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		F425035D2EE1BACA007D79A1 /* CandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesView.swift; sourceTree = "<group>"; };
+		F425035F2EE1D18F007D79A1 /* CandidateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateDetailView.swift; sourceTree = "<group>"; };
+		F42503612EE1D804007D79A1 /* FavoriteCandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCandidatesView.swift; sourceTree = "<group>"; };
+		F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCandidatesListView.swift; sourceTree = "<group>"; };
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +117,10 @@
 				F4907C6F2EE0801000E79D35 /* Shared */,
 				F43C17DD2EDF7B5C009D9423 /* SignInView.swift */,
 				F425035B2EE09F8E007D79A1 /* RegisterView.swift */,
+				F425035D2EE1BACA007D79A1 /* CandidatesView.swift */,
+				F425035F2EE1D18F007D79A1 /* CandidateDetailView.swift */,
+				F42503612EE1D804007D79A1 /* FavoriteCandidatesView.swift */,
+				F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -284,11 +296,15 @@
 			files = (
 				F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */,
 				F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */,
+				F42503602EE1D18F007D79A1 /* CandidateDetailView.swift in Sources */,
 				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
 				F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */,
+				F425035E2EE1BADD007D79A1 /* CandidatesView.swift in Sources */,
+				F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */,
 				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
 				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,
 				F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */,
+				F42503622EE1D804007D79A1 /* FavoriteCandidatesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
