@@ -94,3 +94,4 @@ struct CandidateCard_Previews: PreviewProvider {
         }
     }
 }
+
