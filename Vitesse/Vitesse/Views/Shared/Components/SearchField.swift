@@ -30,7 +30,7 @@ public struct SearchField: View {
         @State private var query: String = ""
         var body: some View {
             ZStack {
-                Color(.systemBackground).ignoresSafeArea()
+                AppBackground()
                 VStack {
                     SearchField(text: $query)
                 }

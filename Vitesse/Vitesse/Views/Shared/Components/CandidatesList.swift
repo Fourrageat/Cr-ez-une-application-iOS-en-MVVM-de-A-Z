@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct CandidatesListView: View {
+public struct CandidatesList: View {
     let candidates: [Candidate]
     let toggleFavorite: (Candidate) -> Void
 
@@ -35,6 +35,6 @@ struct CandidatesListView_Previews: PreviewProvider {
             .init(firstName: "David", lastName: "Moreau", isFavorite: true),
         ]
 
-        return CandidatesListView(candidates: samples, toggleFavorite: { _ in })
+        return CandidatesList(candidates: samples, toggleFavorite: { _ in })
     }
 }

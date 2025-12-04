@@ -77,3 +77,21 @@ struct CandidateCard: View {
         .hoverEffect(.highlight)
     }
 }
+
+struct CandidateCard_Previews: PreviewProvider {
+    static var previews: some View {
+        let sample = Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true)
+        let samples: [Candidate] = [sample]
+
+        return Group {
+            // Centered preview of the card itself
+            ZStack {
+                Color(.systemBackground).ignoresSafeArea()
+                CandidateCard(candidate: sample, toggle: { _ in })
+                    .frame(maxWidth: 360)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
+            .previewDisplayName("CandidateCard – Centered")
+        }
+    }
+}

@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct Candidate: Identifiable, Hashable {
-    let id = UUID()
-    var firstName: String
-    var lastName: String
-    var isFavorite: Bool = false
-
-    var displayName: String { "\(firstName) \(lastName)" }
-}
-
 struct CandidatesView: View {
     // Runtime data: starts empty as requested
     @State private var candidates: [Candidate] = []
@@ -48,7 +39,7 @@ struct CandidatesView: View {
             if filteredCandidates.isEmpty {
                 EmptyState()
             } else {
-                CandidatesListView(candidates: filteredCandidates, toggleFavorite: toggleFavorite)
+                CandidatesList(candidates: filteredCandidates, toggleFavorite: toggleFavorite)
             }
         }
         .navigationDestination(isPresented: $goToEditableCandidatesListView) {

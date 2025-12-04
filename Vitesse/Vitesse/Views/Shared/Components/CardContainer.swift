@@ -33,3 +33,20 @@ extension View {
         self.modifier(CardContainerModifier(isAppeared: isAppeared, shakeOffset: shakeOffset))
     }
 }
+
+struct CardContainer_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            AppBackground()
+            Text("VITESSE")
+                .font(.largeTitle)
+                .foregroundColor(.primary)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(24)
+                .shadow(color: Color.black.opacity(0.08), radius: 20, x: 0, y: 12)
+                .padding(.horizontal)
+        }
+        .previewDisplayName("CardContainer Preview")
+    }
+}

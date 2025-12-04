@@ -21,5 +21,8 @@ struct EmptyState: View {
 }
 
 #Preview {
-    EmptyState()
+    ZStack {
+        AppBackground()
+        EmptyState()
+    }
 }
