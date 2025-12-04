@@ -159,7 +159,7 @@ struct SignInView: View {
                 RegisterView()
             }
             .navigationDestination(isPresented: $goToCandidates) {
-                CandidatesView()
+                CandidatesListView()
             }
             .onAppear {
                 isAppeared = true
