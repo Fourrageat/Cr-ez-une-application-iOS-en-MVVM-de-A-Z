@@ -13,6 +13,7 @@ struct CandidatesListView: View {
     @State private var search: String = ""
     @State private var isEditing: Bool = false
     @State private var selectedIDs: Set<UUID> = []
+    @State private var showFavoritesOnly: Bool = false
 
     // Initializer to inject initial candidates (useful for previews)
     init(candidates: [Candidate] = []) {
@@ -58,8 +59,10 @@ struct CandidatesListView: View {
     }
 
     private var filteredCandidates: [Candidate] {
-        guard !search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return candidates }
-        return candidates.filter { $0.displayName.localizedCaseInsensitiveContains(search) }
+        let base = showFavoritesOnly ? candidates.filter { $0.isFavorite } : candidates
+        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return base }
+        return base.filter { $0.displayName.localizedCaseInsensitiveContains(trimmed) }
     }
 
     private func toggleFavorite(_ candidate: Candidate) {
@@ -105,9 +108,9 @@ struct CandidatesListView: View {
                 .disabled(selectedIDs.isEmpty)
             } else {
                 Button {
-                    
+                    showFavoritesOnly.toggle()
                 } label: {
-                    Image(systemName: "star")
+                    Image(systemName: showFavoritesOnly ? "star.fill" : "star")
                 }
             }
         }
