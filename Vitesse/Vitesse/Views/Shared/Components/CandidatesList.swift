@@ -13,7 +13,7 @@ public struct CandidatesList: View {
         ScrollView {
             LazyVStack(spacing: 12, pinnedViews: []) {
                 ForEach(candidates) { candidate in
-                    NavigationLink(destination: CandidateDetailView(candidate: candidate)) {
+                    NavigationLink(destination: CandidateView(candidate: candidate)) {
                         CandidateCard(candidate: candidate, toggle: toggleFavorite)
                             .padding(.horizontal)
                     }

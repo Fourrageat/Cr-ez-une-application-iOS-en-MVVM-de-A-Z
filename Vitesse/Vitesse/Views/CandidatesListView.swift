@@ -1,5 +1,5 @@
 //
-//  CandidatesView.swift
+//  CandidatesListView.swift
 //  Vitesse
 //
 //  Created by Baptiste Fourrageat on 04/12/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CandidatesView: View {
+struct CandidatesListView: View {
     // Runtime data: starts empty as requested
     @State private var candidates: [Candidate] = []
     @State private var search: String = ""
@@ -46,7 +46,7 @@ struct CandidatesView: View {
             EditableCandidatesListView()
         }
         .navigationDestination(isPresented: $goToFavoriteCandidatesView) {
-            FavoriteCandidatesView()
+            FavoriteCandidatesListView()
         }
     }
 
@@ -98,7 +98,7 @@ struct CandidatesView_Previews: PreviewProvider {
             .init(firstName: "Jules", lastName: "Dubois")
         ]
 
-        return CandidatesView(candidates: samples)
+        return CandidatesListView(candidates: samples)
     }
 }
 
