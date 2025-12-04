@@ -36,7 +36,6 @@ struct CandidatesView: View {
                     .toolbar { toolbar }
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden(true)
-
             }
         }
         
@@ -44,25 +43,12 @@ struct CandidatesView: View {
 
     private var content: some View {
         VStack(spacing: 0) {
-            searchField
+            SearchField(text: $search)
 
             if filteredCandidates.isEmpty {
-                emptyState
+                EmptyState()
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 12, pinnedViews: []) {
-                        ForEach(filteredCandidates) { candidate in
-                            NavigationLink(destination: CandidateDetailView(candidate: candidate)) {
-                                CandidateCard(candidate: candidate, toggle: toggleFavorite)
-                                    .padding(.horizontal)
-                            }
-                            .tint(.primary)
-                            
-                        }
-                        .animation(.snappy, value: filteredCandidates)
-                    }
-                    .padding(.vertical, 8)
-                }
+                CandidatesListView(candidates: filteredCandidates, toggleFavorite: toggleFavorite)
             }
         }
         .navigationDestination(isPresented: $goToEditableCandidatesListView) {
@@ -71,32 +57,6 @@ struct CandidatesView: View {
         .navigationDestination(isPresented: $goToFavoriteCandidatesView) {
             FavoriteCandidatesView()
         }
-    }
-
-    private var searchField: some View {
-        HStack(spacing: 8) {
-            Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
-                .padding(.leading, 8)
-            TextField("Search", text: $search)
-                .textInputAutocapitalization(.never)
-                .disableAutocorrection(true)
-                .submitLabel(.search)
-        }
-        .padding(.vertical, 14)
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .padding(.horizontal)
-        .padding(.vertical, 10)
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: 8) {
-            Image(systemName: "person.3")
-                .font(.system(size: 40))
-                .foregroundStyle(.secondary)
-            Text("No candidates yet")
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var filteredCandidates: [Candidate] {
@@ -130,76 +90,7 @@ struct CandidatesView: View {
     }
 }
 
-private struct CandidateCard: View {
-    var candidate: Candidate
-    var toggle: (Candidate) -> Void
 
-    var initials: String {
-        let f = candidate.firstName.first.map { String($0) } ?? ""
-        let l = candidate.lastName.first.map { String($0) } ?? ""
-        return (f + l).uppercased()
-    }
-
-    var body: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(.quaternary)
-                Text(initials)
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.secondary)
-            }
-            .frame(width: 36, height: 36)
-
-            HStack(spacing: 2) {
-                Text(candidate.firstName)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                Text("\(candidate.lastName.first.map { String($0) } ?? "").")
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-                    .padding(.leading, 4)
-            }
-
-            Spacer(minLength: 8)
-
-            Button {
-                withAnimation(.spring(duration: 0.25)) {
-                    toggle(candidate)
-                }
-            } label: {
-                if #available(iOS 17.0, *) {
-                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-                        .symbolEffect(.bounce, value: candidate.isFavorite)
-                        .foregroundStyle(candidate.isFavorite ? .yellow : .secondary)
-                } else {
-                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-                        .foregroundStyle(candidate.isFavorite ? .yellow : .secondary)
-                }
-            }
-            .buttonStyle(.plain)
-        }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(.thinMaterial)
-        )
-        .overlay(
-            Group {
-                if #available(iOS 17.0, *) {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .strokeBorder(.separator.opacity(0.4))
-                } else {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .strokeBorder(Color.secondary.opacity(0.25))
-                }
-            }
-        )
-        .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 3)
-        .contentShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .hoverEffect(.highlight)
-    }
-}
 
 struct CandidatesView_Previews: PreviewProvider {
     static var previews: some View {
@@ -217,7 +108,6 @@ struct CandidatesView_Previews: PreviewProvider {
         ]
 
         return CandidatesView(candidates: samples)
-        .previewDisplayName("Avec données factices")
-        .previewDevice("iPhone 13 mini")
     }
 }
+

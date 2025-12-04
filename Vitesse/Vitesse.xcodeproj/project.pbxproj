@@ -12,6 +12,10 @@
 		F42503602EE1D18F007D79A1 /* CandidateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateDetailView.swift */; };
 		F42503622EE1D804007D79A1 /* FavoriteCandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503612EE1D804007D79A1 /* FavoriteCandidatesView.swift */; };
 		F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */; };
+		F42503662EE1F588007D79A1 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503652EE1F588007D79A1 /* SearchField.swift */; };
+		F42503682EE1F718007D79A1 /* CandidateCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503672EE1F6F7007D79A1 /* CandidateCard.swift */; };
+		F425036A2EE1F7FE007D79A1 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503692EE1F7FE007D79A1 /* EmptyState.swift */; };
+		F425036C2EE1FA13007D79A1 /* CandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425036B2EE1FA13007D79A1 /* CandidatesListView.swift */; };
 		F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* SignInView.swift */; };
 		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
 		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
@@ -44,6 +48,10 @@
 		F425035F2EE1D18F007D79A1 /* CandidateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateDetailView.swift; sourceTree = "<group>"; };
 		F42503612EE1D804007D79A1 /* FavoriteCandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCandidatesView.swift; sourceTree = "<group>"; };
 		F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCandidatesListView.swift; sourceTree = "<group>"; };
+		F42503652EE1F588007D79A1 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		F42503672EE1F6F7007D79A1 /* CandidateCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateCard.swift; sourceTree = "<group>"; };
+		F42503692EE1F7FE007D79A1 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
+		F425036B2EE1FA13007D79A1 /* CandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListView.swift; sourceTree = "<group>"; };
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,8 +160,12 @@
 		F4907C6F2EE0801000E79D35 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F42503672EE1F6F7007D79A1 /* CandidateCard.swift */,
+				F425036B2EE1FA13007D79A1 /* CandidatesListView.swift */,
 				F4907C702EE0803F00E79D35 /* CardContainer.swift */,
 				F4907C6D2EE07EB600E79D35 /* AppBackground.swift */,
+				F42503652EE1F588007D79A1 /* SearchField.swift */,
+				F42503692EE1F7FE007D79A1 /* EmptyState.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -295,15 +307,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */,
+				F425036A2EE1F7FE007D79A1 /* EmptyState.swift in Sources */,
 				F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */,
 				F42503602EE1D18F007D79A1 /* CandidateDetailView.swift in Sources */,
 				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
 				F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */,
 				F425035E2EE1BADD007D79A1 /* CandidatesView.swift in Sources */,
+				F42503662EE1F588007D79A1 /* SearchField.swift in Sources */,
 				F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */,
 				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
 				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,
+				F42503682EE1F718007D79A1 /* CandidateCard.swift in Sources */,
 				F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */,
+				F425036C2EE1FA13007D79A1 /* CandidatesListView.swift in Sources */,
 				F42503622EE1D804007D79A1 /* FavoriteCandidatesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
