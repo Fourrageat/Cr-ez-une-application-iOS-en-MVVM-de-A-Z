@@ -81,7 +81,6 @@ struct CandidateCard: View {
 struct CandidateCard_Previews: PreviewProvider {
     static var previews: some View {
         let sample = Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true)
-        let samples: [Candidate] = [sample]
 
         return Group {
             // Centered preview of the card itself
