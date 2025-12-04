@@ -34,6 +34,7 @@ struct CandidatesView: View {
                 AppBackground()
                 content
                     .toolbar { toolbar }
+                    .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden(true)
 
             }
@@ -200,19 +201,23 @@ private struct CandidateCard: View {
     }
 }
 
-#Preview("Avec données factices") {
-    let samples: [Candidate] = [
-        .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
-        .init(firstName: "Bob", lastName: "Durand"),
-        .init(firstName: "Chloé", lastName: "Bernard"),
-        .init(firstName: "David", lastName: "Moreau", isFavorite: true),
-        .init(firstName: "Éva", lastName: "Lefèvre"),
-        .init(firstName: "Farid", lastName: "Rossi"),
-        .init(firstName: "Gaëlle", lastName: "Petit"),
-        .init(firstName: "Hugo", lastName: "Robert"),
-        .init(firstName: "Inès", lastName: "Richard"),
-        .init(firstName: "Jules", lastName: "Dubois")
-    ]
+struct CandidatesView_Previews: PreviewProvider {
+    static var previews: some View {
+        let samples: [Candidate] = [
+            .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
+            .init(firstName: "Bob", lastName: "Durand"),
+            .init(firstName: "Chloé", lastName: "Bernard"),
+            .init(firstName: "David", lastName: "Moreau", isFavorite: true),
+            .init(firstName: "Éva", lastName: "Lefèvre"),
+            .init(firstName: "Farid", lastName: "Rossi"),
+            .init(firstName: "Gaëlle", lastName: "Petit"),
+            .init(firstName: "Hugo", lastName: "Robert"),
+            .init(firstName: "Inès", lastName: "Richard"),
+            .init(firstName: "Jules", lastName: "Dubois")
+        ]
 
-    CandidatesView(candidates: samples)
+        return CandidatesView(candidates: samples)
+        .previewDisplayName("Avec données factices")
+        .previewDevice("iPhone 13 mini")
+    }
 }
