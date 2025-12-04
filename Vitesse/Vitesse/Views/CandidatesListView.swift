@@ -88,7 +88,7 @@ struct CandidatesListView: View {
     @ToolbarContentBuilder
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Button(isEditing ? "Done" : "Edit") {
+            Button(isEditing ? "Cancel" : "Edit") {
                 isEditing.toggle()
                 if !isEditing {
                     selectedIDs.removeAll()
