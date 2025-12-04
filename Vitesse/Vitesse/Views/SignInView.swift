@@ -17,6 +17,7 @@ struct SignInView: View {
     @State private var showError: Bool = false
     @State private var isKeyboardVisible: Bool = false
     @State private var goToRegister: Bool = false
+    @State private var goToCandidates: Bool = false
 
     private enum Field { case email, password }
 
@@ -89,6 +90,7 @@ struct SignInView: View {
                         // Sign In button
                         Button {
                             signIn()
+                            
                         } label: {
                             HStack {
                                 if isSigningIn {
@@ -156,6 +158,9 @@ struct SignInView: View {
             .navigationDestination(isPresented: $goToRegister) {
                 RegisterView()
             }
+            .navigationDestination(isPresented: $goToCandidates) {
+                CandidatesView()
+            }
             .onAppear {
                 isAppeared = true
                 NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
@@ -201,7 +206,9 @@ struct SignInView: View {
                 isSigningIn = false
                 // Flip to success or show error example
                 let success = Bool.random()
-                if !success {
+                if success {
+                    goToCandidates = true
+                } else {
                     showError = true
                     shake()
                 }
