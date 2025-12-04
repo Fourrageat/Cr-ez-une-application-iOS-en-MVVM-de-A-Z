@@ -21,6 +21,11 @@ struct CandidatesView: View {
     @State private var candidates: [Candidate] = []
     @State private var search: String = ""
 
+    // Initializer to inject initial candidates (useful for previews)
+    init(candidates: [Candidate] = []) {
+        _candidates = State(initialValue: candidates)
+    }
+
     var body: some View {
 
         NavigationStack {
@@ -139,43 +144,5 @@ private struct CandidateRow: View {
         .init(firstName: "Jules", lastName: "Dubois")
     ]
 
-    CandidatesView()
-        .withPreviewData(samples)
-}
-
-// MARK: - Preview helper to inject sample data only in previews
-private extension View {
-    func withPreviewData(_ candidates: [Candidate]) -> some View {
-        modifier(PreviewCandidatesInjector(candidates: candidates))
-    }
-}
-
-private struct PreviewCandidatesInjector: ViewModifier {
-    var candidates: [Candidate]
-    @State private var state: [Candidate] = []
-
-    func body(content: Content) -> some View {
-        CandidatsPreviewContainer(initial: candidates) {
-            content
-        }
-    }
-}
-
-private struct CandidatsPreviewContainer<Content: View>: View {
-    var initial: [Candidate]
-    @State private var candidates: [Candidate] = []
-    var content: () -> Content
-
-    var body: some View {
-        CandidatsViewContainer(candidates: initial, content: content)
-    }
-}
-
-private struct CandidatsViewContainer<Content: View>: View {
-    var candidates: [Candidate]
-    var content: () -> Content
-
-    var body: some View {
-        content()
-    }
+    CandidatesView(candidates: samples)
 }
