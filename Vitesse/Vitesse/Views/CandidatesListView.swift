@@ -8,16 +8,10 @@
 import SwiftUI
 
 struct CandidatesListView: View {
-    // Runtime data: starts empty as requested
-    @State private var candidates: [Candidate] = []
-    @State private var search: String = ""
-    @State private var isEditing: Bool = false
-    @State private var selectedIDs: Set<UUID> = []
-    @State private var showFavoritesOnly: Bool = false
+    @StateObject private var viewModel: CandidatesListViewModel
 
-    // Initializer to inject initial candidates (useful for previews)
     init(candidates: [Candidate] = []) {
-        _candidates = State(initialValue: candidates)
+        _viewModel = StateObject(wrappedValue: CandidatesListViewModel(candidates: candidates))
     }
 
     var body: some View {
@@ -35,7 +29,7 @@ struct CandidatesListView: View {
 
     private var content: some View {
         VStack(spacing: 0) {
-            SearchField(text: $search)
+            SearchField(text: $viewModel.search)
 
             if filteredCandidates.isEmpty {
                 EmptyState()
@@ -45,12 +39,12 @@ struct CandidatesListView: View {
                     CandidatesList(
                         candidates: filteredCandidates,
                         toggleFavorite: { candidate in
-                            toggleFavorite(candidate)
+                            viewModel.toggleFavorite(candidate)
                         },
-                        isEditing: isEditing,
-                        selectedIDs: $selectedIDs,
+                        isEditing: viewModel.isEditing,
+                        selectedIDs: $viewModel.selectedIDs,
                         onSelect: { candidate in
-                            toggleSelection(for: candidate)
+                            viewModel.toggleSelection(for: candidate)
                         }
                     )
                 }
@@ -58,40 +52,15 @@ struct CandidatesListView: View {
         }
     }
 
-    private var filteredCandidates: [Candidate] {
-        let base = showFavoritesOnly ? candidates.filter { $0.isFavorite } : candidates
-        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return base }
-        return base.filter { $0.displayName.localizedCaseInsensitiveContains(trimmed) }
-    }
-
-    private func toggleFavorite(_ candidate: Candidate) {
-        if let idx = candidates.firstIndex(of: candidate) {
-            candidates[idx].isFavorite.toggle()
-        }
-    }
-
-    private func toggleSelection(for candidate: Candidate) {
-        if selectedIDs.contains(candidate.id) {
-            selectedIDs.remove(candidate.id)
-        } else {
-            selectedIDs.insert(candidate.id)
-        }
-    }
-
-    private func deleteSelected() {
-        guard !selectedIDs.isEmpty else { return }
-        candidates.removeAll { selectedIDs.contains($0.id) }
-        selectedIDs.removeAll()
-    }
+    private var filteredCandidates: [Candidate] { viewModel.filteredCandidates }
 
     @ToolbarContentBuilder
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            Button(isEditing ? "Cancel" : "Edit") {
-                isEditing.toggle()
-                if !isEditing {
-                    selectedIDs.removeAll()
+            Button(viewModel.isEditing ? "Cancel" : "Edit") {
+                viewModel.isEditing.toggle()
+                if !viewModel.isEditing {
+                    viewModel.selectedIDs.removeAll()
                 }
             }
         }
@@ -99,18 +68,18 @@ struct CandidatesListView: View {
             Text("Candidates")
         }
         ToolbarItem(placement: .topBarTrailing) {
-            if isEditing {
+            if viewModel.isEditing {
                 Button(role: .destructive) {
-                    deleteSelected()
+                    viewModel.deleteSelected()
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
-                .disabled(selectedIDs.isEmpty)
+                .disabled(viewModel.selectedIDs.isEmpty)
             } else {
                 Button {
-                    showFavoritesOnly.toggle()
+                    viewModel.showFavoritesOnly.toggle()
                 } label: {
-                    Image(systemName: showFavoritesOnly ? "star.fill" : "star")
+                    Image(systemName: viewModel.showFavoritesOnly ? "star.fill" : "star")
                 }
             }
         }
