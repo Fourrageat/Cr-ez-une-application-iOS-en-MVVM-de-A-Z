@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CandidatesListView: View {
     @StateObject private var viewModel: CandidatesListViewModel
+    
+    private var filteredCandidates: [Candidate] { viewModel.filteredCandidates }
 
     init(candidates: [Candidate] = []) {
         _viewModel = StateObject(wrappedValue: CandidatesListViewModel(candidates: candidates))
@@ -52,8 +54,6 @@ struct CandidatesListView: View {
         }
     }
 
-    private var filteredCandidates: [Candidate] { viewModel.filteredCandidates }
-
     @ToolbarContentBuilder
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
@@ -86,24 +86,26 @@ struct CandidatesListView: View {
     }
 }
 
-
-
-struct CandidatesView_Previews: PreviewProvider {
-    static var previews: some View {
-        let samples: [Candidate] = [
-            .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
-            .init(firstName: "Bob", lastName: "Durand"),
-            .init(firstName: "Chloé", lastName: "Bernard"),
-            .init(firstName: "David", lastName: "Moreau", isFavorite: true),
-            .init(firstName: "Éva", lastName: "Lefèvre"),
-            .init(firstName: "Farid", lastName: "Rossi"),
-            .init(firstName: "Gaëlle", lastName: "Petit"),
-            .init(firstName: "Hugo", lastName: "Robert"),
-            .init(firstName: "Inès", lastName: "Richard"),
-            .init(firstName: "Jules", lastName: "Dubois")
-        ]
-
-        return CandidatesListView(candidates: samples)
-    }
+#Preview {
+    CandidatesListView(candidates: CandidatesListViewModel().candidates)
 }
+
+//struct CandidatesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let samples: [Candidate] = [
+//            .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
+//            .init(firstName: "Bob", lastName: "Durand"),
+//            .init(firstName: "Chloé", lastName: "Bernard"),
+//            .init(firstName: "David", lastName: "Moreau", isFavorite: true),
+//            .init(firstName: "Éva", lastName: "Lefèvre"),
+//            .init(firstName: "Farid", lastName: "Rossi"),
+//            .init(firstName: "Gaëlle", lastName: "Petit"),
+//            .init(firstName: "Hugo", lastName: "Robert"),
+//            .init(firstName: "Inès", lastName: "Richard"),
+//            .init(firstName: "Jules", lastName: "Dubois")
+//        ]
+//
+//        return CandidatesListView(candidates: samples)
+//    }
+//}
 

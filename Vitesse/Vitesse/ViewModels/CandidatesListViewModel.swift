@@ -8,7 +8,18 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
-    init(candidates: [Candidate] = []) {
+    init(candidates: [Candidate] = [
+        .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
+        .init(firstName: "Bob", lastName: "Durand"),
+        .init(firstName: "Chloé", lastName: "Bernard"),
+        .init(firstName: "David", lastName: "Moreau", isFavorite: true),
+        .init(firstName: "Éva", lastName: "Lefèvre"),
+        .init(firstName: "Farid", lastName: "Rossi"),
+        .init(firstName: "Gaëlle", lastName: "Petit"),
+        .init(firstName: "Hugo", lastName: "Robert"),
+        .init(firstName: "Inès", lastName: "Richard"),
+        .init(firstName: "Jules", lastName: "Dubois")
+    ]) {
         self.candidates = candidates
     }
     
