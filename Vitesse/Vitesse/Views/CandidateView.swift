@@ -11,10 +11,11 @@ struct CandidateView: View {
     var candidate: Candidate
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(candidate.firstName)
     }
 }
 
 #Preview {
-    CandidateView(candidate: .init(firstName: "John", lastName: "Snow", isFavorite: false))
+    CandidateView(candidate: Candidate(firstName: "John", lastName: "Smith"))
 }
+
