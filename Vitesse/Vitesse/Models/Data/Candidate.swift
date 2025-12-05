@@ -7,11 +7,17 @@
 
 import Foundation
 
-struct Candidate: Identifiable, Hashable {
-    let id = UUID()
-    var firstName: String
-    var lastName: String
+struct Candidate: Identifiable, Hashable, Codable {
+    var id = UUID()
+    let firstName: String
+    let lastName: String
     var isFavorite: Bool = false
+    let phone: String?
+    let email: String
+    let note: String?
+    let linkedin: String?
+}
 
-    var displayName: String { "\(firstName) \(lastName)" }
+struct Candidates: Codable {
+    let candidates: [Candidate]
 }

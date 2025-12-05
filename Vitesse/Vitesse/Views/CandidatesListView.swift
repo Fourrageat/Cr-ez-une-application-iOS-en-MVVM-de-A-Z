@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct CandidatesListView: View {
-    @StateObject private var viewModel: CandidatesListViewModel
-    
-    private var filteredCandidates: [Candidate] { viewModel.filteredCandidates }
-
-    init(candidates: [Candidate] = []) {
-        _viewModel = StateObject(wrappedValue: CandidatesListViewModel(candidates: candidates))
-    }
+    @StateObject private var viewModel = CandidatesListViewModel()
 
     var body: some View {
         NavigationStack {
@@ -26,23 +20,19 @@ struct CandidatesListView: View {
                     .navigationBarBackButtonHidden(true)
             }
         }
-        
     }
 
     private var content: some View {
         VStack(spacing: 0) {
             SearchField(text: $viewModel.search)
 
-            if filteredCandidates.isEmpty {
+            if viewModel.candidates.isEmpty {
                 EmptyState()
             } else {
                 VStack(spacing: 8) {
 
                     CandidatesList(
-                        candidates: filteredCandidates,
-                        toggleFavorite: { candidate in
-                            viewModel.toggleFavorite(candidate)
-                        },
+                        candidates: viewModel.candidates,
                         isEditing: viewModel.isEditing,
                         selectedIDs: $viewModel.selectedIDs,
                         onSelect: { candidate in
@@ -87,7 +77,7 @@ struct CandidatesListView: View {
 }
 
 #Preview {
-    CandidatesListView(candidates: CandidatesListViewModel().candidates)
+    CandidatesListView()
 }
 
 //struct CandidatesView_Previews: PreviewProvider {
@@ -108,4 +98,5 @@ struct CandidatesListView: View {
 //        return CandidatesListView(candidates: samples)
 //    }
 //}
+//
 

@@ -8,32 +8,49 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
+    private var allCandidates: [Candidate] = []
+    private var cancellables: Set<AnyCancellable> = []
+    
     init(candidates: [Candidate] = [
-        .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
-        .init(firstName: "Bob", lastName: "Durand"),
-        .init(firstName: "Chloé", lastName: "Bernard"),
-        .init(firstName: "David", lastName: "Moreau", isFavorite: true),
-        .init(firstName: "Éva", lastName: "Lefèvre"),
-        .init(firstName: "Farid", lastName: "Rossi"),
-        .init(firstName: "Gaëlle", lastName: "Petit"),
-        .init(firstName: "Hugo", lastName: "Robert"),
-        .init(firstName: "Inès", lastName: "Richard"),
-        .init(firstName: "Jules", lastName: "Dubois")
+        .init(firstName: "Alice", lastName: "Martin",  isFavorite: true, phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Bob", lastName: "Durand", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Chloé", lastName: "Bernard",  isFavorite: true, phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "David", lastName: "Moreau", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Éva", lastName: "Lefèvre", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Farid", lastName: "Rossi", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Gaëlle", lastName: "Petit", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Hugo", lastName: "Robert", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Inès", lastName: "Richard", phone: "", email: "", note: "", linkedin: ""),
+        .init(firstName: "Jules", lastName: "Dubois", phone: "", email: "", note: "", linkedin: "")
     ]) {
         self.candidates = candidates
+        self.allCandidates = candidates
+        
+        Publishers.CombineLatest($search.removeDuplicates(), $showFavoritesOnly.removeDuplicates())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (search, favoritesOnly) in
+                self?.applyFilters(search: search, favoritesOnly: favoritesOnly)
+            }
+            .store(in: &cancellables)
     }
     
-    var filteredCandidates: [Candidate] {
-        let base = showFavoritesOnly ? candidates.filter { $0.isFavorite } : candidates
-        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return base }
-        return base.filter { $0.displayName.localizedCaseInsensitiveContains(trimmed) }
-    }
-    
-    func toggleFavorite(_ candidate: Candidate) {
-        if let idx = candidates.firstIndex(of: candidate) {
-            candidates[idx].isFavorite.toggle()
+    private func applyFilters(search: String, favoritesOnly: Bool) {
+        var filtered = allCandidates
+
+        if favoritesOnly {
+            filtered = filtered.filter { $0.isFavorite }
         }
+
+        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            let query = trimmed.lowercased()
+            filtered = filtered.filter { candidate in
+                candidate.firstName.lowercased().contains(query)
+                || candidate.lastName.lowercased().contains(query)
+            }
+        }
+
+        candidates = filtered
     }
     
     func toggleSelection(for candidate: Candidate) {
@@ -46,8 +63,9 @@ final class CandidatesListViewModel: ObservableObject {
     
     func deleteSelected() {
         guard !selectedIDs.isEmpty else { return }
-        candidates.removeAll { selectedIDs.contains($0.id) }
+        allCandidates.removeAll { selectedIDs.contains($0.id) }
         selectedIDs.removeAll()
+        applyFilters(search: search, favoritesOnly: showFavoritesOnly)
     }
     
     func endEditing() {

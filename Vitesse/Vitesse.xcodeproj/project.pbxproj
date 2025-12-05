@@ -10,8 +10,6 @@
 		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
 		F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */; };
 		F42503602EE1D18F007D79A1 /* CandidateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateView.swift */; };
-		F42503622EE1D804007D79A1 /* FavoriteCandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503612EE1D804007D79A1 /* FavoriteCandidatesListView.swift */; };
-		F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */; };
 		F42503662EE1F588007D79A1 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503652EE1F588007D79A1 /* SearchField.swift */; };
 		F42503682EE1F718007D79A1 /* CandidateCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503672EE1F6F7007D79A1 /* CandidateCard.swift */; };
 		F425036A2EE1F7FE007D79A1 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503692EE1F7FE007D79A1 /* EmptyState.swift */; };
@@ -48,8 +46,6 @@
 		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListView.swift; sourceTree = "<group>"; };
 		F425035F2EE1D18F007D79A1 /* CandidateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateView.swift; sourceTree = "<group>"; };
-		F42503612EE1D804007D79A1 /* FavoriteCandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCandidatesListView.swift; sourceTree = "<group>"; };
-		F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableCandidatesListView.swift; sourceTree = "<group>"; };
 		F42503652EE1F588007D79A1 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		F42503672EE1F6F7007D79A1 /* CandidateCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateCard.swift; sourceTree = "<group>"; };
 		F42503692EE1F7FE007D79A1 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
@@ -151,8 +147,6 @@
 				F425035B2EE09F8E007D79A1 /* RegisterView.swift */,
 				F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */,
 				F425035F2EE1D18F007D79A1 /* CandidateView.swift */,
-				F42503612EE1D804007D79A1 /* FavoriteCandidatesListView.swift */,
-				F42503632EE1D894007D79A1 /* EditableCandidatesListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -338,13 +332,11 @@
 				F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */,
 				F425036E2EE20121007D79A1 /* Candidate.swift in Sources */,
 				F42503662EE1F588007D79A1 /* SearchField.swift in Sources */,
-				F42503642EE1D894007D79A1 /* EditableCandidatesListView.swift in Sources */,
 				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
 				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,
 				F42503682EE1F718007D79A1 /* CandidateCard.swift in Sources */,
 				F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */,
 				F425036C2EE1FA13007D79A1 /* CandidatesList.swift in Sources */,
-				F42503622EE1D804007D79A1 /* FavoriteCandidatesListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
