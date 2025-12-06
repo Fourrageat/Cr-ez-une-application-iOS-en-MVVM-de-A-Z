@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CandidateCard: View {
     var candidate: Candidate
-    var toggle: (Candidate) -> Void
 
     var initials: String {
         let f = candidate.firstName.first.map { String($0) } ?? ""
@@ -40,21 +39,9 @@ struct CandidateCard: View {
 
             Spacer(minLength: 8)
 
-            Button {
-                withAnimation(.spring(duration: 0.25)) {
-                    toggle(candidate)
-                }
-            } label: {
-                if #available(iOS 17.0, *) {
-                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-                        .symbolEffect(.bounce, value: candidate.isFavorite)
-                        .foregroundStyle(candidate.isFavorite ? .yellow : .secondary)
-                } else {
-                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-                        .foregroundStyle(candidate.isFavorite ? .yellow : .secondary)
-                }
-            }
-            .buttonStyle(.plain)
+            Image(systemName: candidate.isFavorite ? "star.fill" : "star")
+                .foregroundStyle(candidate.isFavorite ? .yellow : .secondary)
+            
         }
         .padding()
         .background(
@@ -80,13 +67,13 @@ struct CandidateCard: View {
 
 struct CandidateCard_Previews: PreviewProvider {
     static var previews: some View {
-        let sample = Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true)
+        let sample = Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: "+1 (555) 123-4567", email: "alice.martin@example.com", note: "Senior iOS Engineer – 8 years experience.", linkedin: "https://www.linkedin.com/in/alicemartin")
 
         return Group {
             // Centered preview of the card itself
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
-                CandidateCard(candidate: sample, toggle: { _ in })
+                CandidateCard(candidate: sample)
                     .frame(maxWidth: 360)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }

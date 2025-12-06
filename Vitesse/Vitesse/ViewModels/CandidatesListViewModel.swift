@@ -8,32 +8,43 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
-    init(candidates: [Candidate] = [
-        .init(firstName: "Alice", lastName: "Martin", isFavorite: true),
-        .init(firstName: "Bob", lastName: "Durand"),
-        .init(firstName: "Chloé", lastName: "Bernard"),
-        .init(firstName: "David", lastName: "Moreau", isFavorite: true),
-        .init(firstName: "Éva", lastName: "Lefèvre"),
-        .init(firstName: "Farid", lastName: "Rossi"),
-        .init(firstName: "Gaëlle", lastName: "Petit"),
-        .init(firstName: "Hugo", lastName: "Robert"),
-        .init(firstName: "Inès", lastName: "Richard"),
-        .init(firstName: "Jules", lastName: "Dubois")
-    ]) {
+    let allCandidates: [Candidate]
+    
+    init(candidates: [Candidate] = Samples.candidates) {
         self.candidates = candidates
+        self.allCandidates = candidates
     }
     
-    var filteredCandidates: [Candidate] {
-        let base = showFavoritesOnly ? candidates.filter { $0.isFavorite } : candidates
-        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return base }
-        return base.filter { $0.displayName.localizedCaseInsensitiveContains(trimmed) }
-    }
-    
-    func toggleFavorite(_ candidate: Candidate) {
-        if let idx = candidates.firstIndex(of: candidate) {
-            candidates[idx].isFavorite.toggle()
+    func applyFilters() {
+        var result = allCandidates
+        if showFavoritesOnly {
+            result = result.filter { $0.isFavorite }
         }
+        candidates = result
+    }
+    
+    func searchFilter(_ text: String) {
+
+        let base = showFavoritesOnly ? allCandidates.filter { $0.isFavorite } : allCandidates
+
+        guard !search.isEmpty else {
+            candidates = base
+            return
+        }
+        
+        let query = text.lowercased()
+        var result = allCandidates.filter { candidate in
+            let first = candidate.firstName.lowercased()
+            let last = candidate.lastName.lowercased()
+
+            return first.contains(query) || last.contains(query)
+        }
+
+        if showFavoritesOnly {
+            result = result.filter { $0.isFavorite }
+        }
+
+        candidates = result
     }
     
     func toggleSelection(for candidate: Candidate) {
