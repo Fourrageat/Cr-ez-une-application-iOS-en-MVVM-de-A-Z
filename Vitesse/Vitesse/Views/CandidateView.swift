@@ -11,15 +11,23 @@ struct CandidateView: View {
     var candidate: Candidate
     
     var body: some View {
-        Text(candidate.firstName)
-        Text(candidate.lastName)
-        Text(candidate.phone!)
-        Text(candidate.email)
-        Text(candidate.note!)
-        Text(candidate.linkedin!)
-        Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-            .foregroundStyle(Color.yellow)
-        
+        ZStack {
+        AppBackground()
+            VStack(alignment: .leading, spacing: 8) {
+                
+                HStack {
+                    Text("\(candidate.firstName) \(candidate.lastName.first.map { String($0) } ?? "").")
+                        .font(.system(size: 35, weight: .bold))
+                    Spacer()
+                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
+                        .foregroundStyle(candidate.isFavorite ? .yellow: .secondary)
+                        .font(.system(size: 35))
+                }
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(30)
+        }
     }
 }
 
@@ -34,3 +42,4 @@ struct CandidateView: View {
         linkedin: "https://www.linkedin.com/in/johnsmith"
     ))
 }
+
