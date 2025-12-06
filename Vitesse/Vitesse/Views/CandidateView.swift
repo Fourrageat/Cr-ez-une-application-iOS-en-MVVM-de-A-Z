@@ -10,6 +10,8 @@ import SwiftUI
 struct CandidateView: View {
     var candidate: Candidate
     
+    @State var isEditing: Bool = false
+    
     var body: some View {
         ZStack {
         AppBackground()
@@ -30,7 +32,12 @@ struct CandidateView: View {
                         Text("Phone :")
                             .font(.system(size: 20, weight: .bold))
                         Spacer()
-                        Text(candidate.phone ?? "")
+                        if candidate.phone == nil {
+                            Text("Not available")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text(candidate.phone!)
+                        }
                     }
                     
                     HStack {
@@ -74,9 +81,16 @@ struct CandidateView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    print("Edit tapped")
+                    if isEditing {
+                        print("Sending...")
+                    }
+                    isEditing.toggle()
                 } label: {
-                    Text("Edit")
+                    if isEditing {
+                        Text("Done")
+                    } else {
+                        Text("Edit")
+                    }
                 }
             }
         }
