@@ -49,13 +49,7 @@ public struct CandidatesList: View {
 
 struct CandidatesListView_Previews: PreviewProvider {
     static var previews: some View {
-        let samples: [Candidate] = [
-            .init(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: "+33 1 23 45 67 89", email: "alice.martin@example.com", note: "Senior iOS Engineer", linkedin: "https://www.linkedin.com/in/alicemartin"),
-            .init(firstName: "Bob", lastName: "Durand", phone: "+33 6 11 22 33 44", email: "bob.durand@example.com", note: "Backend Developer", linkedin: "https://www.linkedin.com/in/bobdurand"),
-            .init(firstName: "Chloé", lastName: "Bernard", phone: "+33 7 55 66 77 88", email: "chloe.bernard@example.com", note: "Data Scientist", linkedin: "https://www.linkedin.com/in/chloebernard"),
-            .init(firstName: "David", lastName: "Moreau", isFavorite: true, phone: "+33 1 98 76 54 32", email: "david.moreau@example.com", note: "Product Manager", linkedin: "https://www.linkedin.com/in/davidmoreau"),
-        ]
 
-        return CandidatesList(candidates: samples)
+        return CandidatesList(candidates: Samples.candidates)
     }
 }

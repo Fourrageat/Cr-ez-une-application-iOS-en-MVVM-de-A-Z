@@ -18,6 +18,9 @@ struct CandidatesListView: View {
                     .toolbar { toolbar }
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationBarBackButtonHidden(true)
+                    .onAppear {
+                        viewModel.applyFilters()
+                    }
             }
         }
     }
@@ -25,6 +28,9 @@ struct CandidatesListView: View {
     private var content: some View {
         VStack(spacing: 0) {
             SearchField(text: $viewModel.search)
+                .onChange(of: viewModel.search) { newValue in
+                    viewModel.searchFilter(newValue)
+                }
 
             if viewModel.candidates.isEmpty {
                 EmptyState()
@@ -68,6 +74,7 @@ struct CandidatesListView: View {
             } else {
                 Button {
                     viewModel.showFavoritesOnly.toggle()
+                    viewModel.applyFilters()
                 } label: {
                     Image(systemName: viewModel.showFavoritesOnly ? "star.fill" : "star")
                 }
