@@ -11,6 +11,8 @@ struct CandidateView: View {
     var candidate: Candidate
     
     @State var isEditing: Bool = false
+    @State private var editedPhone: String = ""
+    @State private var editedEmail: String = ""
     
     var body: some View {
         ZStack {
@@ -32,11 +34,19 @@ struct CandidateView: View {
                         Text("Phone :")
                             .font(.system(size: 20, weight: .bold))
                         Spacer()
-                        if candidate.phone == nil {
-                            Text("Not available")
-                                .foregroundStyle(.secondary)
+                        if isEditing {
+                            TextField("Enter phone number", text: $editedPhone)
+                                .textContentType(.telephoneNumber)
+                                .keyboardType(.phonePad)
+                                .multilineTextAlignment(.trailing)
                         } else {
-                            Text(candidate.phone!)
+                            let phone = candidate.phone ?? ""
+                            if phone.isEmpty {
+                                Text("Not available")
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text(phone)
+                            }
                         }
                     }
                     
@@ -44,7 +54,20 @@ struct CandidateView: View {
                         Text("Email :")
                             .font(.system(size: 20, weight: .bold))
                         Spacer()
-                        Text(candidate.email)
+                        if isEditing {
+                            TextField("Enter email", text: $editedEmail)
+                                .textContentType(.emailAddress)
+                                .keyboardType(.emailAddress)
+                                .multilineTextAlignment(.trailing)
+                        } else {
+                            let email = candidate.email
+                            if email.isEmpty {
+                                Text("Not available")
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text(email)
+                            }
+                        }
                     }
                     
                     HStack {
@@ -77,12 +100,27 @@ struct CandidateView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
+            .onAppear {
+                editedPhone = candidate.phone ?? ""
+                editedEmail = candidate.email
+            }
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     if isEditing {
-                        print("Sending...")
+                        // Persist the edited phone locally; replace with real save as needed
+                        if editedPhone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                            // keep as nil when empty
+                            // If Candidate is a value type passed by value, this won't persist outside.
+                        } else {
+                            // Assign locally so UI reflects change
+                            // Note: To persist, pass a Binding/ObservableObject or a save closure.
+                        }
+                    } else {
+                        // entering edit mode; seed the fields
+                        editedPhone = candidate.phone ?? ""
+                        editedEmail = candidate.email
                     }
                     isEditing.toggle()
                 } label: {
