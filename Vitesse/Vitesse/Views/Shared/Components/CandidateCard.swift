@@ -67,15 +67,13 @@ struct CandidateCard: View {
 
 struct CandidateCard_Previews: PreviewProvider {
     static var previews: some View {
-        let sample = Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: "+1 (555) 123-4567", email: "alice.martin@example.com", note: "Senior iOS Engineer – 8 years experience.", linkedin: "https://www.linkedin.com/in/alicemartin")
+        let sample = Samples.candidates[0]
 
         return Group {
             // Centered preview of the card itself
             ZStack {
-                Color(.systemBackground).ignoresSafeArea()
+                AppBackground()
                 CandidateCard(candidate: sample)
-                    .frame(maxWidth: 360)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
             }
             .previewDisplayName("CandidateCard – Centered")
         }

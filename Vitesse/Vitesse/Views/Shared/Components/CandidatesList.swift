@@ -50,6 +50,11 @@ public struct CandidatesList: View {
 struct CandidatesListView_Previews: PreviewProvider {
     static var previews: some View {
 
-        return CandidatesList(candidates: Samples.candidates)
+        return Group {
+            ZStack {
+                AppBackground()
+                CandidatesList(candidates: Samples.candidates)
+            }
+        }
     }
 }
