@@ -121,7 +121,7 @@ struct CandidateReadOnlyView: View {
                 if note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text("Not available").foregroundStyle(.secondary)
                 } else {
-                    Text(note).font(.system(size: 14))
+                    Text(note).font(.system(size: 17))
                 }
             }
         }
@@ -166,8 +166,26 @@ struct CandidateEditView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Note :")
                     .font(.system(size: 20, weight: .bold))
-                TextField("Enter a note", text: $editedNote)
-                    .multilineTextAlignment(.leading)
+                ZStack(alignment: .topLeading) {
+                    if editedNote.isEmpty {
+                        Text("Enter a note")
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 8)
+                            .padding(.leading, 5)
+                    }
+                    TextEditor(text: $editedNote)
+                        .multilineTextAlignment(.leading)
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(Color(.systemBackground))
+                                )
+                        )
+                        .frame(height: 150)
+                }
             }
         }
         .padding(.top, 20)
