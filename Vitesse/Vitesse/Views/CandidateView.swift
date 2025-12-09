@@ -94,7 +94,7 @@ struct CandidateView: View {
                             .font(.system(size: 20, weight: .bold))
                         if isEditing {
                             TextField("Enter a note", text: $editedNote)
-                                .multilineTextAlignment(.trailing)
+                                .multilineTextAlignment(.leading)
                         } else {
                             let note = (editedNote.isEmpty ? candidate.note : editedNote)
                             if note!.isEmpty {
