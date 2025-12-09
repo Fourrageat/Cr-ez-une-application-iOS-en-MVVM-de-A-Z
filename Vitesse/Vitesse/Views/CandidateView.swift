@@ -71,7 +71,21 @@ struct CandidateView: View {
                     }
                 }
             }
+            if isEditing {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        editedPhone = candidate.phone ?? ""
+                        editedEmail = candidate.email
+                        editedLinkedin = candidate.linkedin ?? ""
+                        editedNote = candidate.note ?? ""
+                        isEditing = false
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+            }
         }
+        .navigationBarBackButtonHidden(isEditing)
     }
 }
 
