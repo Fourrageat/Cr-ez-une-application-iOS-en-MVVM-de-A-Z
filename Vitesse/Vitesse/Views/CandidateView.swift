@@ -13,6 +13,7 @@ struct CandidateView: View {
     @State var isEditing: Bool = false
     @State private var editedPhone: String = ""
     @State private var editedEmail: String = ""
+    @State private var editedLinkedin: String = ""
     
     var body: some View {
         ZStack {
@@ -80,7 +81,7 @@ struct CandidateView: View {
                             let url = URL(string: urlString),
                             !urlString.isEmpty
                         {
-                            OpenLinkButton(url: url, title: "Go on Linkedin")
+                            OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: isEditing, editedLinkedin: $editedLinkedin)
                         } else {
                             Text("Not available")
                                 .foregroundStyle(.secondary)
@@ -103,6 +104,7 @@ struct CandidateView: View {
             .onAppear {
                 editedPhone = candidate.phone ?? ""
                 editedEmail = candidate.email
+                editedLinkedin = candidate.linkedin ?? ""
             }
         }
         .toolbar {
@@ -139,23 +141,31 @@ struct OpenLinkButton: View {
     @Environment(\.openURL) private var openURL
     let url: URL
     var title: String
+    let candidate: Candidate
+    var isEditing: Bool
+    @Binding var editedLinkedin: String
 
     var body: some View {
         Button {
             openURL(url)
         } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "link")
-                Text(title)
-                    .fontWeight(.semibold)
+            if !isEditing {
+                
+                HStack(spacing: 8) {
+                    Image(systemName: "link")
+                    Text(title)
+                        .fontWeight(.semibold)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color.blue.opacity(0.15))
+                )
+                .foregroundStyle(.blue)
+            } else {
+                TextField("Enter linkedin link", text: $editedLinkedin)
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color.blue.opacity(0.15))
-            )
-            .foregroundStyle(.blue)
         }
     }
 }
@@ -173,4 +183,3 @@ struct OpenLinkButton: View {
         ))
     }
 }
-
