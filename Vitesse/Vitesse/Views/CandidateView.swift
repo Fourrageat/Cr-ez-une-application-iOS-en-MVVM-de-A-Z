@@ -14,6 +14,7 @@ struct CandidateView: View {
     @State private var editedPhone: String = ""
     @State private var editedEmail: String = ""
     @State private var editedLinkedin: String = ""
+    @State private var editedNote: String = ""
     
     var body: some View {
         ZStack {
@@ -41,7 +42,7 @@ struct CandidateView: View {
                                 .keyboardType(.phonePad)
                                 .multilineTextAlignment(.trailing)
                         } else {
-                            let phone = candidate.phone ?? ""
+                            let phone = (editedPhone.isEmpty ? (candidate.phone ?? "") : editedPhone)
                             if phone.isEmpty {
                                 Text("Not available")
                                     .foregroundStyle(.secondary)
@@ -61,7 +62,7 @@ struct CandidateView: View {
                                 .keyboardType(.emailAddress)
                                 .multilineTextAlignment(.trailing)
                         } else {
-                            let email = candidate.email
+                            let email = (editedEmail.isEmpty ? candidate.email : editedEmail)
                             if email.isEmpty {
                                 Text("Not available")
                                     .foregroundStyle(.secondary)
@@ -91,8 +92,18 @@ struct CandidateView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Note :")
                             .font(.system(size: 20, weight: .bold))
-                        Text(candidate.note ?? "Not available")
-                            .font(.system(size: 14))
+                        if isEditing {
+                            TextField("Enter a note", text: $editedNote)
+                                .multilineTextAlignment(.trailing)
+                        } else {
+                            let note = (editedNote.isEmpty ? candidate.note : editedNote)
+                            if note!.isEmpty {
+                                Text("")
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                Text(note ?? "")
+                            }
+                        }
                     }
                 }
                 .padding(.top, 20)
@@ -105,6 +116,7 @@ struct CandidateView: View {
                 editedPhone = candidate.phone ?? ""
                 editedEmail = candidate.email
                 editedLinkedin = candidate.linkedin ?? ""
+                editedNote = candidate.note ?? ""
             }
         }
         .toolbar {
@@ -121,8 +133,9 @@ struct CandidateView: View {
                         }
                     } else {
                         // entering edit mode; seed the fields
-                        editedPhone = candidate.phone ?? ""
-                        editedEmail = candidate.email
+                        if editedPhone.isEmpty { editedPhone = candidate.phone ?? "" }
+                        if editedEmail.isEmpty { editedEmail = candidate.email }
+                        if editedLinkedin.isEmpty { editedLinkedin = candidate.linkedin ?? "" }
                     }
                     isEditing.toggle()
                 } label: {
@@ -164,7 +177,12 @@ struct OpenLinkButton: View {
                 )
                 .foregroundStyle(.blue)
             } else {
-                TextField("Enter linkedin link", text: $editedLinkedin)
+                if (editedLinkedin.isEmpty) {
+                    Text("Not available")
+                        .foregroundStyle(.secondary)
+                } else {
+                    TextField("Enter linkedin link", text: $editedLinkedin)
+                }
             }
         }
     }
@@ -183,3 +201,4 @@ struct OpenLinkButton: View {
         ))
     }
 }
+
