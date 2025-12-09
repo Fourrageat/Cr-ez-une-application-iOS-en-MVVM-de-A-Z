@@ -18,10 +18,9 @@ struct CandidateView: View {
     
     var body: some View {
         ZStack {
-        AppBackground()
+            AppBackground()
             
             VStack(alignment: .leading, spacing: 40) {
-                
                 HStack {
                     Text("\(candidate.firstName) \(candidate.lastName.first.map { String($0) } ?? "").")
                         .font(.system(size: 35, weight: .bold))
@@ -30,85 +29,19 @@ struct CandidateView: View {
                         .foregroundStyle(candidate.isFavorite ? .yellow: .primary)
                         .font(.system(size: 35))
                 }
-                VStack(alignment: .leading, spacing: 30) {
-                    
-                    HStack {
-                        Text("Phone :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        if isEditing {
-                            TextField("Enter phone number", text: $editedPhone)
-                                .textContentType(.telephoneNumber)
-                                .keyboardType(.phonePad)
-                                .multilineTextAlignment(.trailing)
-                        } else {
-                            let phone = (editedPhone.isEmpty ? (candidate.phone ?? "") : editedPhone)
-                            if phone.isEmpty {
-                                Text("Not available")
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text(phone)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Text("Email :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        if isEditing {
-                            TextField("Enter email", text: $editedEmail)
-                                .textContentType(.emailAddress)
-                                .keyboardType(.emailAddress)
-                                .multilineTextAlignment(.trailing)
-                        } else {
-                            let email = (editedEmail.isEmpty ? candidate.email : editedEmail)
-                            if email.isEmpty {
-                                Text("Not available")
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text(email)
-                            }
-                        }
-                    }
-                    
-                    HStack {
-                        Text("LinkedIn :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        let urlString = candidate.linkedin?.trimmingCharacters(in: .whitespacesAndNewlines)
-                        if
-                            let urlString,
-                            let url = URL(string: urlString),
-                            !urlString.isEmpty
-                        {
-                            OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: isEditing, editedLinkedin: $editedLinkedin)
-                        } else {
-                            Text("Not available")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Note :")
-                            .font(.system(size: 20, weight: .bold))
-                        if isEditing {
-                            TextField("Enter a note", text: $editedNote)
-                                .multilineTextAlignment(.leading)
-                        } else {
-                            let note = (editedNote.isEmpty ? candidate.note : editedNote)
-                            if note!.isEmpty {
-                                Text("")
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text(note ?? "")
-                            }
-                        }
-                    }
+
+                if isEditing {
+                    CandidateEditView(editedPhone: $editedPhone,
+                                      editedEmail: $editedEmail,
+                                      editedLinkedin: $editedLinkedin,
+                                      editedNote: $editedNote)
+                } else {
+                    CandidateReadOnlyView(candidate: candidate,
+                                          phone: editedPhone,
+                                          email: editedEmail,
+                                          linkedin: editedLinkedin,
+                                          note: editedNote)
                 }
-                .padding(.top, 20)
-                .padding(.horizontal, 10)
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
@@ -123,19 +56,11 @@ struct CandidateView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     if isEditing {
-                        // Persist the edited phone locally; replace with real save as needed
-                        if editedPhone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                            // keep as nil when empty
-                            // If Candidate is a value type passed by value, this won't persist outside.
-                        } else {
-                            // Assign locally so UI reflects change
-                            // Note: To persist, pass a Binding/ObservableObject or a save closure.
-                        }
-                    } else {
-                        // entering edit mode; seed the fields
-                        if editedPhone.isEmpty { editedPhone = candidate.phone ?? "" }
-                        if editedEmail.isEmpty { editedEmail = candidate.email }
-                        if editedLinkedin.isEmpty { editedLinkedin = candidate.linkedin ?? "" }
+                        // Leaving edit mode: normalize current edits (even if empty) so they become the new displayed values
+                        editedPhone = editedPhone.trimmingCharacters(in: .whitespacesAndNewlines)
+                        editedEmail = editedEmail.trimmingCharacters(in: .whitespacesAndNewlines)
+                        editedLinkedin = editedLinkedin.trimmingCharacters(in: .whitespacesAndNewlines)
+                        editedNote = editedNote.trimmingCharacters(in: .whitespacesAndNewlines)
                     }
                     isEditing.toggle()
                 } label: {
@@ -147,6 +72,106 @@ struct CandidateView: View {
                 }
             }
         }
+    }
+}
+
+struct CandidateReadOnlyView: View {
+    let candidate: Candidate
+    let phone: String
+    let email: String
+    let linkedin: String
+    let note: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            HStack {
+                Text("Phone :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                if phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(phone)
+                }
+            }
+            HStack {
+                Text("Email :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(email)
+                }
+            }
+            HStack {
+                Text("LinkedIn :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                let urlString = linkedin.trimmingCharacters(in: .whitespacesAndNewlines)
+                if let url = URL(string: urlString), !urlString.isEmpty {
+                    OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: false, editedLinkedin: .constant(linkedin))
+                } else {
+                    Text("Not available").foregroundStyle(.secondary)
+                }
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Note :")
+                    .font(.system(size: 20, weight: .bold))
+                if note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(note).font(.system(size: 14))
+                }
+            }
+        }
+        .padding(.top, 20)
+        .padding(.horizontal, 10)
+    }
+}
+
+struct CandidateEditView: View {
+    @Binding var editedPhone: String
+    @Binding var editedEmail: String
+    @Binding var editedLinkedin: String
+    @Binding var editedNote: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            HStack {
+                Text("Phone :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter phone number", text: $editedPhone)
+                    .textContentType(.telephoneNumber)
+                    .keyboardType(.phonePad)
+                    .multilineTextAlignment(.trailing)
+            }
+            HStack {
+                Text("Email :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter email", text: $editedEmail)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .multilineTextAlignment(.trailing)
+            }
+            HStack {
+                Text("LinkedIn :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter linkedin link", text: $editedLinkedin)
+                    .multilineTextAlignment(.trailing)
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Note :")
+                    .font(.system(size: 20, weight: .bold))
+                TextField("Enter a note", text: $editedNote)
+                    .multilineTextAlignment(.leading)
+            }
+        }
+        .padding(.top, 20)
+        .padding(.horizontal, 10)
     }
 }
 
@@ -177,12 +202,7 @@ struct OpenLinkButton: View {
                 )
                 .foregroundStyle(.blue)
             } else {
-                if (editedLinkedin.isEmpty) {
-                    Text("Not available")
-                        .foregroundStyle(.secondary)
-                } else {
-                    TextField("Enter linkedin link", text: $editedLinkedin)
-                }
+                TextField("Enter linkedin link", text: $editedLinkedin)
             }
         }
     }
