@@ -7,21 +7,6 @@
 
 import Foundation
 
-struct Candidate: Identifiable, Hashable, Codable {
-    var id = UUID()
-    let firstName: String
-    let lastName: String
-    var isFavorite: Bool = false
-    let phone: String?
-    let email: String
-    let note: String?
-    let linkedin: String?
-}
-
-struct Candidates: Codable {
-    let candidates: [Candidate]
-}
-
 struct Samples {
     static let candidates: [Candidate] = [
         .init(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: "+33 6 12 34 56 01", email: "alice.martin@example.com", note: "iOS Developer", linkedin: "https://linkedin.com/in/alicemartin"),

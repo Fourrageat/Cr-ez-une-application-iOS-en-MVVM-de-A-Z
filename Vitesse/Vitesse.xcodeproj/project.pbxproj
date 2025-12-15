@@ -167,7 +167,7 @@
 		F4907C6B2EE079C900E79D35 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F49AA2372EF0627600240CA0 /* Repositories */,
+				F49AA2382EF062A500240CA0 /* Repository.swift */,
 				F425036F2EE2012B007D79A1 /* Data */,
 				F4907C682EE079C300E79D35 /* HTTPClient */,
 			);
@@ -190,14 +190,6 @@
 				F42503702EE20163007D79A1 /* Components */,
 			);
 			path = Shared;
-			sourceTree = "<group>";
-		};
-		F49AA2372EF0627600240CA0 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-				F49AA2382EF062A500240CA0 /* Repository.swift */,
-			);
-			path = Repositories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

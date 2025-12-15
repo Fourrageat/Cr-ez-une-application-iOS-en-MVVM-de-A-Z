@@ -28,12 +28,29 @@ private struct User: Encodable {
     let lastName: String
 }
 
+// Candidate
+struct Candidate: Identifiable, Hashable, Codable {
+    var id = UUID()
+    let firstName: String
+    let lastName: String
+    var isFavorite: Bool = false
+    let phone: String?
+    let email: String
+    let note: String?
+    let linkedin: String?
+}
+
+struct Candidates: Codable {
+    let candidates: [Candidate]
+}
+
 
 // MARK: - Protocol
 
 protocol RepositoryProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
     func register(email: String, password: String, firstName: String, lastName: String) async throws -> Void
+    func fetchCandidates() async throws -> Candidates
 }
 
 // MARK: - Repository
@@ -85,6 +102,20 @@ final class Repository: RepositoryProtocol {
         )
         _ = try await perform(EmptyDecodable.self, request: request)
     }
+    
+    // GET /candidate
+    func fetchCandidates() async throws -> Candidates {
+        let url = baseURL.appending(path: "/candidate")
+        let request = try URLRequest(
+            url: url,
+            method: .GET,
+            parameters: nil,
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+        )
+        return try await perform(Candidates.self, request: request)
+    }
+    
+    // GET /candidate/:candidateid
 
     // MARK: - Networking helpers
 
