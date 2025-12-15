@@ -9,11 +9,6 @@ import Foundation
 
 // MARK: - Models
 
-struct AuthCredentials: Codable, Equatable {
-    let email: String
-    let password: String
-}
-
 struct AuthResponse: Codable, Equatable {
     let isAdmin: Bool
     let token: String
@@ -22,7 +17,12 @@ struct AuthResponse: Codable, Equatable {
 // MARK: - Protocol
 
 protocol AuthenticationRepositoryProtocol {
-    func login(with credentials: AuthCredentials) async throws -> AuthResponse
+    func login(email: String, password: String) async throws -> AuthResponse
+}
+
+private struct Credentials: Encodable {
+    let email: String
+    let password: String
 }
 
 // MARK: - Repository
@@ -52,13 +52,13 @@ final class AuthenticationRepository: AuthenticationRepositoryProtocol {
     }
 
     // POST /user/auth
-    func login(with credentials: AuthCredentials) async throws -> AuthResponse {
-        let url = baseURL.appending(path: "/user/anth")
+    func login(email: String, password: String) async throws -> AuthResponse {
+        let url = baseURL.appending(path: "/user/auth")
         let request = try URLRequest(
             url: url,
             method: .POST,
-            parameters: try toParameters(credentials),
-            headers: ["Accept": "application/json"]
+            parameters: try toParameters(Credentials(email: email, password: password)),
+            headers: ["Accept": "application/json", "Content-Type": "application/json"]
         )
         return try await perform(AuthResponse.self, request: request)
     }
