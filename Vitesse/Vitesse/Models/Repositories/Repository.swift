@@ -9,20 +9,31 @@ import Foundation
 
 // MARK: - Models
 
-struct AuthResponse: Codable, Equatable {
-    let isAdmin: Bool
-    let token: String
-}
-
+// Login
 private struct Credentials: Encodable {
     let email: String
     let password: String
 }
 
+struct AuthResponse: Codable, Equatable {
+    let isAdmin: Bool
+    let token: String
+}
+
+// Register
+private struct User: Encodable {
+    let email: String
+    let password: String
+    let firstName: String
+    let lastName: String
+}
+
+
 // MARK: - Protocol
 
 protocol RepositoryProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
+    func register(email: String, password: String, firstName: String, lastName: String) async throws -> Void
 }
 
 // MARK: - Repository
@@ -61,6 +72,18 @@ final class Repository: RepositoryProtocol {
             headers: ["Accept": "application/json", "Content-Type": "application/json"]
         )
         return try await perform(AuthResponse.self, request: request)
+    }
+    
+    // POST /user/register
+    func register(email: String, password: String, firstName: String, lastName: String) async throws -> Void {
+        let url = baseURL.appending(path: "/user/register")
+        let request = try URLRequest(
+            url: url,
+            method: .POST,
+            parameters: try toParameters(User(email: email, password: password, firstName: firstName, lastName: lastName)),
+            headers: ["Accept": "application/json", "Content-Type": "application/json"]
+        )
+        _ = try await perform(EmptyDecodable.self, request: request)
     }
 
     // MARK: - Networking helpers
