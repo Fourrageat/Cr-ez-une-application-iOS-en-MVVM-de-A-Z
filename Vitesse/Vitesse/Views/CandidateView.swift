@@ -55,13 +55,6 @@ struct CandidateView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    if isEditing {
-                        // Leaving edit mode: normalize current edits (even if empty) so they become the new displayed values
-                        editedPhone = editedPhone.trimmingCharacters(in: .whitespacesAndNewlines)
-                        editedEmail = editedEmail.trimmingCharacters(in: .whitespacesAndNewlines)
-                        editedLinkedin = editedLinkedin.trimmingCharacters(in: .whitespacesAndNewlines)
-                        editedNote = editedNote.trimmingCharacters(in: .whitespacesAndNewlines)
-                    }
                     isEditing.toggle()
                 } label: {
                     if isEditing {
