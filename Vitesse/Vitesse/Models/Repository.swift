@@ -139,6 +139,18 @@ final class Repository: RepositoryProtocol {
         return try await perform(Candidate.self, request: request)
     }
     
+    // PUT /candidate/:candidateId/favorite
+    func updateFavoriteCandidate(id: String) async throws -> Candidate {
+        let url = baseURL.appending(path: "/candidate/\(id)/favorite")
+        let request = try URLRequest(
+            url: url,
+            method: .PUT,
+            parameters: nil,
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+        )
+        return try await perform(Candidate.self, request: request)
+    }
+    
 
     // MARK: - Networking helpers
 
