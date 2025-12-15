@@ -13,7 +13,7 @@ struct CandidateView: View {
     @State var isEditing: Bool = false
     @State private var editedPhone: String = ""
     @State private var editedEmail: String = ""
-    @State private var editedLinkedin: String = ""
+    @State private var editedLinkedinURL: String = ""
     @State private var editedNote: String = ""
     
     var body: some View {
@@ -33,13 +33,13 @@ struct CandidateView: View {
                 if isEditing {
                     CandidateEditView(editedPhone: $editedPhone,
                                       editedEmail: $editedEmail,
-                                      editedLinkedin: $editedLinkedin,
+                                      editedLinkedinURL: $editedLinkedinURL,
                                       editedNote: $editedNote)
                 } else {
                     CandidateReadOnlyView(candidate: candidate,
                                           phone: editedPhone,
                                           email: editedEmail,
-                                          linkedin: editedLinkedin,
+                                          linkedinURL: editedLinkedinURL,
                                           note: editedNote)
                 }
             }
@@ -48,7 +48,7 @@ struct CandidateView: View {
             .onAppear {
                 editedPhone = candidate.phone ?? ""
                 editedEmail = candidate.email
-                editedLinkedin = candidate.linkedin ?? ""
+                editedLinkedinURL = candidate.linkedinURL ?? ""
                 editedNote = candidate.note ?? ""
             }
         }
@@ -69,7 +69,7 @@ struct CandidateView: View {
                     Button {
                         editedPhone = candidate.phone ?? ""
                         editedEmail = candidate.email
-                        editedLinkedin = candidate.linkedin ?? ""
+                        editedLinkedinURL = candidate.linkedinURL ?? ""
                         editedNote = candidate.note ?? ""
                         isEditing = false
                     } label: {
@@ -86,7 +86,7 @@ struct CandidateReadOnlyView: View {
     let candidate: Candidate
     let phone: String
     let email: String
-    let linkedin: String
+    let linkedinURL: String
     let note: String
 
     var body: some View {
@@ -115,9 +115,9 @@ struct CandidateReadOnlyView: View {
                 Text("LinkedIn :")
                     .font(.system(size: 20, weight: .bold))
                 Spacer()
-                let urlString = linkedin.trimmingCharacters(in: .whitespacesAndNewlines)
+                let urlString = linkedinURL.trimmingCharacters(in: .whitespacesAndNewlines)
                 if let url = URL(string: urlString), !urlString.isEmpty {
-                    OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: false, editedLinkedin: .constant(linkedin))
+                    OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: false, editedLinkedinURL: .constant(linkedinURL))
                 } else {
                     Text("Not available").foregroundStyle(.secondary)
                 }
@@ -140,7 +140,7 @@ struct CandidateReadOnlyView: View {
 struct CandidateEditView: View {
     @Binding var editedPhone: String
     @Binding var editedEmail: String
-    @Binding var editedLinkedin: String
+    @Binding var editedLinkedinURL: String
     @Binding var editedNote: String
 
     var body: some View {
@@ -167,7 +167,7 @@ struct CandidateEditView: View {
                 Text("LinkedIn :")
                     .font(.system(size: 20, weight: .bold))
                 Spacer()
-                TextField("Enter linkedin link", text: $editedLinkedin)
+                TextField("Enter linkedin link", text: $editedLinkedinURL)
                     .multilineTextAlignment(.trailing)
             }
             VStack(alignment: .leading, spacing: 10) {
@@ -206,7 +206,7 @@ struct OpenLinkButton: View {
     var title: String
     let candidate: Candidate
     var isEditing: Bool
-    @Binding var editedLinkedin: String
+    @Binding var editedLinkedinURL: String
 
     var body: some View {
         Button {
@@ -227,7 +227,7 @@ struct OpenLinkButton: View {
                 )
                 .foregroundStyle(.blue)
             } else {
-                TextField("Enter linkedin link", text: $editedLinkedin)
+                TextField("Enter linkedin link", text: $editedLinkedinURL)
             }
         }
     }
@@ -242,7 +242,7 @@ struct OpenLinkButton: View {
             phone: "+1 (555) 123-4567",
             email: "john.smith@example.com",
             note: "Met at iOS meetup. Strong SwiftUI skills.",
-            linkedin: "https://www.linkedin.com/in/johnsmith"
+            linkedinURL: "https://www.linkedin.com/in/johnsmith"
         ))
     }
 }

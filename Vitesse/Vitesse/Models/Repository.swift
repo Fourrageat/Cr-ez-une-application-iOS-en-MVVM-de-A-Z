@@ -37,7 +37,7 @@ struct Candidate: Identifiable, Hashable, Codable {
     let phone: String?
     let email: String
     let note: String?
-    let linkedin: String?
+    let linkedinURL: String?
 }
 
 struct Candidates: Codable {
@@ -128,12 +128,27 @@ final class Repository: RepositoryProtocol {
     }
     
     // PUT /candidate/:candidateId
-    func updateCandidate(id: String) async throws -> Candidate {
+    func updateCandidate(
+        id: String,
+        firstName: String,
+        lastName: String,
+        phone: String?,
+        email: String,
+        note: String?,
+        linkedinURL: String?
+    ) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)")
         let request = try URLRequest(
             url: url,
             method: .PUT,
-            parameters: nil,
+            parameters: try toParameters(Candidate(
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                email: email,
+                note: note,
+                linkedinURL: linkedinURL
+            )),
             headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
         )
         return try await perform(Candidate.self, request: request)
