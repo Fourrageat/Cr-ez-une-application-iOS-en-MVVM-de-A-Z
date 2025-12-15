@@ -154,6 +154,18 @@ final class Repository: RepositoryProtocol {
         return try await perform(Candidate.self, request: request)
     }
     
+    // DELETE /candidate/:candidate
+    func deleteCandidate(id: String) async throws {
+        let url = baseURL.appending(queryItems: [URLQueryItem(name: "id", value: id)])
+        let request = try URLRequest(
+            url: url,
+            method: .DELETE,
+            parameters: nil,
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+        )
+        _ = try await perform(EmptyDecodable.self, request: request)
+    }
+    
     // PUT /candidate/:candidateId/favorite
     func updateFavoriteCandidate(id: String) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)/favorite")

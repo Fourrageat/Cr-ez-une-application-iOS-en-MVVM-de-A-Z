@@ -19,9 +19,10 @@ extension URLRequest {
             switch method {
             case .GET:
                 encodeParametersInURL(parameters, components: components)
-            case .POST:
+            case .POST, .DELETE, .PUT:
                 try encodeParametersInBody(parameters)
             }
+            
         }
 
         if let headers = headers {
