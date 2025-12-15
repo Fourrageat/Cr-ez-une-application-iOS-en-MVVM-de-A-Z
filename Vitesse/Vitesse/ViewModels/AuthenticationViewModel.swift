@@ -25,7 +25,6 @@ class AuthenticationViewModel: ObservableObject {
 
         do {
             let response = try await repository.login(email: email, password: password)
-            print(response)
             isLogged = true
             
         } catch {
@@ -34,7 +33,6 @@ class AuthenticationViewModel: ObservableObject {
             } else {
                 errorMessage = "Server Error"
             }
-            print(errorMessage)
             isLogged = false
         }
     }
