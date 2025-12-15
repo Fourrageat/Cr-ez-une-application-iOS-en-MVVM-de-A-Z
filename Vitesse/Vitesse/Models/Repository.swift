@@ -115,12 +115,24 @@ final class Repository: RepositoryProtocol {
         return try await perform(Candidates.self, request: request)
     }
     
-    // GET /candidate/:candidateid
+    // GET /candidate/:candidateId
     func fetchCandidate(id: String) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)")
         let request = try URLRequest(
             url: url,
             method: .GET,
+            parameters: nil,
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+        )
+        return try await perform(Candidate.self, request: request)
+    }
+    
+    // PUT /candidate/:candidateId
+    func updateCandidate(id: String) async throws -> Candidate {
+        let url = baseURL.appending(path: "/candidate/\(id)")
+        let request = try URLRequest(
+            url: url,
+            method: .PUT,
             parameters: nil,
             headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
         )
