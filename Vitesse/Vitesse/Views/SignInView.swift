@@ -18,7 +18,7 @@ struct SignInView: View {
 
     private enum Field { case email, password }
     
-    @ObservedObject var viewModel = AuthenticationViewModel(authenticationRepository: Repository())
+    @ObservedObject var viewModel = AuthenticationViewModel(repository: Repository())
 
     var body: some View {
         NavigationStack {
