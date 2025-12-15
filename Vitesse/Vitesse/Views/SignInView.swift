@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct SignInView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
-    
     @FocusState private var focusedField: Field?
     @State private var isAppeared: Bool = false
     @State private var isSigningIn: Bool = false
@@ -20,6 +17,8 @@ struct SignInView: View {
     @State private var goToCandidates: Bool = false
 
     private enum Field { case email, password }
+    
+    @ObservedObject var viewModel = AuthenticationViewModel(authenticationRepository: Repository())
 
     var body: some View {
         NavigationStack {
@@ -37,12 +36,12 @@ struct SignInView: View {
                                     Text("Email")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
-                                        .offset(y: (email.isEmpty && focusedField != .email) ? 0 : -18)
-                                        .scaleEffect((email.isEmpty && focusedField != .email) ? 1 : 0.9, anchor: .leading)
+                                        .offset(y: (viewModel.email.isEmpty && focusedField != .email) ? 0 : -18)
+                                        .scaleEffect((viewModel.email.isEmpty && focusedField != .email) ? 1 : 0.9, anchor: .leading)
                                         .opacity(0.9)
                                         .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: email)
-                                    TextField("", text: $email)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.email)
+                                    TextField("", text: $viewModel.email)
                                         .textContentType(.emailAddress)
                                         .keyboardType(.emailAddress)
                                         .autocapitalization(.none)
@@ -67,12 +66,12 @@ struct SignInView: View {
                                     Text("Password")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
-                                        .offset(y: (password.isEmpty && focusedField != .password) ? 0 : -18)
-                                        .scaleEffect((password.isEmpty && focusedField != .password) ? 1 : 0.9, anchor: .leading)
+                                        .offset(y: (viewModel.password.isEmpty && focusedField != .password) ? 0 : -18)
+                                        .scaleEffect((viewModel.password.isEmpty && focusedField != .password) ? 1 : 0.9, anchor: .leading)
                                         .opacity(0.9)
                                         .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: password)
-                                    SecureField("", text: $password)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.password)
+                                    SecureField("", text: $viewModel.password)
                                         .textContentType(.password)
                                         .focused($focusedField, equals: .password)
                                         .submitLabel(.go)
@@ -96,6 +95,7 @@ struct SignInView: View {
                                 if isSigningIn {
                                     ProgressView()
                                         .tint(.white)
+                                        .padding(.trailing, 3)
                                 }
                                 Text(isSigningIn ? "Signing In…" : "Sign In")
                                     .fontWeight(.semibold)
@@ -129,7 +129,7 @@ struct SignInView: View {
                         .accessibilityLabel("Register")
                         
                         if showError {
-                            Text("Bad credentials. Try again.")
+                            Text(viewModel.errorMessage)
                                 .font(.footnote)
                                 .foregroundStyle(.red)
                                 .transition(.opacity.combined(with: .move(edge: .top)))
@@ -178,8 +178,8 @@ struct SignInView: View {
     }
 
     private var isFormValid: Bool {
-        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !password.isEmpty
+        !viewModel.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !viewModel.password.isEmpty
     }
 
     private var borderColorForEmail: Color {
@@ -192,26 +192,33 @@ struct SignInView: View {
         return focusedField == .password ? .accentColor : Color.secondary.opacity(0.3)
     }
 
+    @MainActor
     private func signIn() {
         guard isFormValid else {
             withAnimation(.default) { showError = true }
             shake()
             return
         }
+
         showError = false
         isSigningIn = true
-        // Simulate async sign-in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                isSigningIn = false
-                // Flip to success or show error example
-                let success = Bool.random()
-                if success {
+
+        Task {
+            // Call into the view model to perform login using its own email/password state
+            await viewModel.login()
+
+            if viewModel.isLogged {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    isSigningIn = false
+                    showError = false
                     goToCandidates = true
-                } else {
-                    showError = true
-                    shake()
                 }
+            } else {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    isSigningIn = false
+                    showError = true
+                }
+                shake()
             }
         }
     }
