@@ -126,6 +126,7 @@ final class Repository: RepositoryProtocol {
         )
         return try await perform(Candidate.self, request: request)
     }
+    
 
     // MARK: - Networking helpers
 
