@@ -14,15 +14,15 @@ struct AuthResponse: Codable, Equatable {
     let token: String
 }
 
+private struct Credentials: Encodable {
+    let email: String
+    let password: String
+}
+
 // MARK: - Protocol
 
 protocol AuthenticationRepositoryProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
-}
-
-private struct Credentials: Encodable {
-    let email: String
-    let password: String
 }
 
 // MARK: - Repository

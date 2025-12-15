@@ -95,6 +95,7 @@ struct SignInView: View {
                                 if isSigningIn {
                                     ProgressView()
                                         .tint(.white)
+                                        .padding(.trailing, 3)
                                 }
                                 Text(isSigningIn ? "Signing In…" : "Sign In")
                                     .fontWeight(.semibold)
@@ -202,13 +203,11 @@ struct SignInView: View {
         showError = false
         isSigningIn = true
 
-        Task { @MainActor in
+        Task {
             // Call into the view model to perform login using its own email/password state
             await viewModel.login()
 
-            // Decide navigation or error based on a simple heuristic: if credentials are non-empty after login, go forward.
-            // If your AuthenticationViewModel exposes a success/error state, you can swap this logic to use it instead.
-            if !viewModel.email.isEmpty {
+            if viewModel.isLogged {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     isSigningIn = false
                     showError = false

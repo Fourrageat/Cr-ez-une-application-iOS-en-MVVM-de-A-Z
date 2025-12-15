@@ -11,9 +11,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
-    @Published var showError: Bool = false
-    @Published var isSigningIn: Bool = false
-    @Published var goToCandidates: Bool = false
+    @Published var isLogged: Bool = false
     
     private let authenticationRepository: AuthenticationRepository
 
@@ -23,23 +21,14 @@ class AuthenticationViewModel: ObservableObject {
     
     @MainActor
     func login() async {
-        guard !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            showError = true
-            return
-        }
-
-        showError = false
-        isSigningIn = true
 
         do {
             let response = try await authenticationRepository.login(email: email, password: password)
-            isSigningIn = false
             print(response)
+            isLogged = true
+            
         } catch {
-            isSigningIn = false
-            showError = true
+            isLogged = false
         }
     }
-    
 }
