@@ -116,6 +116,16 @@ final class Repository: RepositoryProtocol {
     }
     
     // GET /candidate/:candidateid
+    func fetchCandidate(id: String) async throws -> Candidate {
+        let url = baseURL.appending(path: "/candidate/\(id)")
+        let request = try URLRequest(
+            url: url,
+            method: .GET,
+            parameters: nil,
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+        )
+        return try await perform(Candidate.self, request: request)
+    }
 
     // MARK: - Networking helpers
 
