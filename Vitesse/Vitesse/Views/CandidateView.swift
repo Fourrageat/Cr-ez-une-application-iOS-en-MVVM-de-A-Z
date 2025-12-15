@@ -10,12 +10,17 @@ import SwiftUI
 struct CandidateView: View {
     var candidate: Candidate
     
+    @State var isEditing: Bool = false
+    @State private var editedPhone: String = ""
+    @State private var editedEmail: String = ""
+    @State private var editedLinkedin: String = ""
+    @State private var editedNote: String = ""
+    
     var body: some View {
         ZStack {
-        AppBackground()
+            AppBackground()
             
             VStack(alignment: .leading, spacing: 40) {
-                
                 HStack {
                     Text("\(candidate.firstName) \(candidate.lastName.first.map { String($0) } ?? "").")
                         .font(.system(size: 35, weight: .bold))
@@ -24,62 +29,174 @@ struct CandidateView: View {
                         .foregroundStyle(candidate.isFavorite ? .yellow: .primary)
                         .font(.system(size: 35))
                 }
-                VStack(alignment: .leading, spacing: 30) {
-                    
-                    HStack {
-                        Text("Phone :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        Text(candidate.phone ?? "")
-                    }
-                    
-                    HStack {
-                        Text("Email :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        Text(candidate.email)
-                    }
-                    
-                    HStack {
-                        Text("LinkedIn :")
-                            .font(.system(size: 20, weight: .bold))
-                        Spacer()
-                        let urlString = candidate.linkedin?.trimmingCharacters(in: .whitespacesAndNewlines)
-                        if
-                            let urlString,
-                            let url = URL(string: urlString),
-                            !urlString.isEmpty
-                        {
-                            OpenLinkButton(url: url, title: "Go on Linkedin")
-                        } else {
-                            Text("Not available")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Note :")
-                            .font(.system(size: 20, weight: .bold))
-                        Text(candidate.note ?? "Not available")
-                            .font(.system(size: 14))
-                    }
+
+                if isEditing {
+                    CandidateEditView(editedPhone: $editedPhone,
+                                      editedEmail: $editedEmail,
+                                      editedLinkedin: $editedLinkedin,
+                                      editedNote: $editedNote)
+                } else {
+                    CandidateReadOnlyView(candidate: candidate,
+                                          phone: editedPhone,
+                                          email: editedEmail,
+                                          linkedin: editedLinkedin,
+                                          note: editedNote)
                 }
-                .padding(.top, 20)
-                .padding(.horizontal, 10)
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
+            .onAppear {
+                editedPhone = candidate.phone ?? ""
+                editedEmail = candidate.email
+                editedLinkedin = candidate.linkedin ?? ""
+                editedNote = candidate.note ?? ""
+            }
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    print("Edit tapped")
+                    isEditing.toggle()
                 } label: {
-                    Text("Edit")
+                    if isEditing {
+                        Text("Done")
+                    } else {
+                        Text("Edit")
+                    }
+                }
+            }
+            if isEditing {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        editedPhone = candidate.phone ?? ""
+                        editedEmail = candidate.email
+                        editedLinkedin = candidate.linkedin ?? ""
+                        editedNote = candidate.note ?? ""
+                        isEditing = false
+                    } label: {
+                        Text("Cancel")
+                    }
                 }
             }
         }
+        .navigationBarBackButtonHidden(isEditing)
+    }
+}
+
+struct CandidateReadOnlyView: View {
+    let candidate: Candidate
+    let phone: String
+    let email: String
+    let linkedin: String
+    let note: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            HStack {
+                Text("Phone :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                if phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(phone)
+                }
+            }
+            HStack {
+                Text("Email :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(email)
+                }
+            }
+            HStack {
+                Text("LinkedIn :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                let urlString = linkedin.trimmingCharacters(in: .whitespacesAndNewlines)
+                if let url = URL(string: urlString), !urlString.isEmpty {
+                    OpenLinkButton(url: url, title: "Go on Linkedin", candidate: candidate, isEditing: false, editedLinkedin: .constant(linkedin))
+                } else {
+                    Text("Not available").foregroundStyle(.secondary)
+                }
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Note :")
+                    .font(.system(size: 20, weight: .bold))
+                if note.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Not available").foregroundStyle(.secondary)
+                } else {
+                    Text(note).font(.system(size: 17))
+                }
+            }
+        }
+        .padding(.top, 20)
+        .padding(.horizontal, 10)
+    }
+}
+
+struct CandidateEditView: View {
+    @Binding var editedPhone: String
+    @Binding var editedEmail: String
+    @Binding var editedLinkedin: String
+    @Binding var editedNote: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            HStack {
+                Text("Phone :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter phone number", text: $editedPhone)
+                    .textContentType(.telephoneNumber)
+                    .keyboardType(.phonePad)
+                    .multilineTextAlignment(.trailing)
+            }
+            HStack {
+                Text("Email :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter email", text: $editedEmail)
+                    .textContentType(.emailAddress)
+                    .keyboardType(.emailAddress)
+                    .multilineTextAlignment(.trailing)
+            }
+            HStack {
+                Text("LinkedIn :")
+                    .font(.system(size: 20, weight: .bold))
+                Spacer()
+                TextField("Enter linkedin link", text: $editedLinkedin)
+                    .multilineTextAlignment(.trailing)
+            }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Note :")
+                    .font(.system(size: 20, weight: .bold))
+                ZStack(alignment: .topLeading) {
+                    if editedNote.isEmpty {
+                        Text("Enter a note")
+                            .foregroundStyle(.secondary)
+                            .padding(.top, 8)
+                            .padding(.leading, 5)
+                    }
+                    TextEditor(text: $editedNote)
+                        .multilineTextAlignment(.leading)
+                        .padding(8)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .stroke(Color.secondary.opacity(0.4), lineWidth: 1)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                        .fill(Color(.systemBackground))
+                                )
+                        )
+                        .frame(height: 150)
+                }
+            }
+        }
+        .padding(.top, 20)
+        .padding(.horizontal, 10)
     }
 }
 
@@ -87,23 +204,31 @@ struct OpenLinkButton: View {
     @Environment(\.openURL) private var openURL
     let url: URL
     var title: String
+    let candidate: Candidate
+    var isEditing: Bool
+    @Binding var editedLinkedin: String
 
     var body: some View {
         Button {
             openURL(url)
         } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "link")
-                Text(title)
-                    .fontWeight(.semibold)
+            if !isEditing {
+                
+                HStack(spacing: 8) {
+                    Image(systemName: "link")
+                    Text(title)
+                        .fontWeight(.semibold)
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color.blue.opacity(0.15))
+                )
+                .foregroundStyle(.blue)
+            } else {
+                TextField("Enter linkedin link", text: $editedLinkedin)
             }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 5)
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(Color.blue.opacity(0.15))
-            )
-            .foregroundStyle(.blue)
         }
     }
 }

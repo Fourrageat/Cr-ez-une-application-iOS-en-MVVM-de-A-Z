@@ -8,7 +8,7 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
-    let allCandidates: [Candidate]
+    private let allCandidates: [Candidate]
     
     init(candidates: [Candidate] = Samples.candidates) {
         self.candidates = candidates

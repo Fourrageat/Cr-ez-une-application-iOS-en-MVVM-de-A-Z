@@ -102,9 +102,9 @@
 			children = (
 				F42503692EE1F7FE007D79A1 /* EmptyState.swift */,
 				F42503652EE1F588007D79A1 /* SearchField.swift */,
-				F4907C702EE0803F00E79D35 /* CardContainer.swift */,
 				F425036B2EE1FA13007D79A1 /* CandidatesList.swift */,
 				F42503672EE1F6F7007D79A1 /* CandidateCard.swift */,
+				F4907C702EE0803F00E79D35 /* CardContainer.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
