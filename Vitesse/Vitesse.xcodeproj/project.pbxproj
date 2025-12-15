@@ -22,7 +22,7 @@
 		F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C672EE079C300E79D35 /* URLRequest.swift */; };
 		F4907C6E2EE07EB600E79D35 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C6D2EE07EB600E79D35 /* AppBackground.swift */; };
 		F4907C712EE0805B00E79D35 /* CardContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4907C702EE0803F00E79D35 /* CardContainer.swift */; };
-		F49AA2392EF062C200240CA0 /* AuthenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA2382EF062A500240CA0 /* AuthenticationRepository.swift */; };
+		F49AA2392EF062C200240CA0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA2382EF062A500240CA0 /* Repository.swift */; };
 		F49AA23D2EF06A0700240CA0 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA23C2EF069F800240CA0 /* AuthenticationViewModel.swift */; };
 		F4C5DA492EE30D5000771A81 /* CandidatesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5DA482EE30D5000771A81 /* CandidatesListViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +63,7 @@
 		F4907C672EE079C300E79D35 /* URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
 		F4907C6D2EE07EB600E79D35 /* AppBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
 		F4907C702EE0803F00E79D35 /* CardContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardContainer.swift; sourceTree = "<group>"; };
-		F49AA2382EF062A500240CA0 /* AuthenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationRepository.swift; sourceTree = "<group>"; };
+		F49AA2382EF062A500240CA0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		F49AA23C2EF069F800240CA0 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		F4C5DA482EE30D5000771A81 /* CandidatesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -195,7 +195,7 @@
 		F49AA2372EF0627600240CA0 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				F49AA2382EF062A500240CA0 /* AuthenticationRepository.swift */,
+				F49AA2382EF062A500240CA0 /* Repository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 				F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */,
 				F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */,
 				F425036E2EE20121007D79A1 /* Candidate.swift in Sources */,
-				F49AA2392EF062C200240CA0 /* AuthenticationRepository.swift in Sources */,
+				F49AA2392EF062C200240CA0 /* Repository.swift in Sources */,
 				F42503662EE1F588007D79A1 /* SearchField.swift in Sources */,
 				F4907C692EE079C300E79D35 /* HTTPMethod.swift in Sources */,
 				F4907C6A2EE079C300E79D35 /* URLRequest.swift in Sources */,

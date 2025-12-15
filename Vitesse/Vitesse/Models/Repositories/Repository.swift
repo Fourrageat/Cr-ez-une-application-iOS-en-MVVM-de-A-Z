@@ -1,5 +1,5 @@
 //
-//  AuthenticationRepository.swift
+//  Repository.swift
 //  Vitesse
 //
 //  Created by Baptiste Fourrageat on 15/12/2025.
@@ -21,13 +21,13 @@ private struct Credentials: Encodable {
 
 // MARK: - Protocol
 
-protocol AuthenticationRepositoryProtocol {
+protocol RepositoryProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
 }
 
 // MARK: - Repository
 
-final class AuthenticationRepository: AuthenticationRepositoryProtocol {
+final class Repository: RepositoryProtocol {
 
     enum RepositoryError: Error, LocalizedError {
         case invalidURL
@@ -38,7 +38,7 @@ final class AuthenticationRepository: AuthenticationRepositoryProtocol {
             switch self {
             case .invalidURL: return "Invalid URL"
             case .invalidResponse: return "Invalid server response"
-            case .serverError(let status): return "Server error (status: \(status))"
+            case .serverError(let status): return status.description
             }
         }
     }

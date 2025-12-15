@@ -18,7 +18,7 @@ struct SignInView: View {
 
     private enum Field { case email, password }
     
-    @ObservedObject var viewModel = AuthenticationViewModel(authenticationRepository: AuthenticationRepository())
+    @ObservedObject var viewModel = AuthenticationViewModel(authenticationRepository: Repository())
 
     var body: some View {
         NavigationStack {
@@ -129,7 +129,7 @@ struct SignInView: View {
                         .accessibilityLabel("Register")
                         
                         if showError {
-                            Text("Bad credentials. Try again.")
+                            Text(viewModel.errorMessage)
                                 .font(.footnote)
                                 .foregroundStyle(.red)
                                 .transition(.opacity.combined(with: .move(edge: .top)))

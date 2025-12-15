@@ -12,22 +12,29 @@ class AuthenticationViewModel: ObservableObject {
     @Published var password: String = ""
     
     @Published var isLogged: Bool = false
+    @Published var errorMessage: String = ""
     
-    private let authenticationRepository: AuthenticationRepository
+    private let repository: Repository
 
-    init(authenticationRepository: AuthenticationRepository) {
-        self.authenticationRepository = authenticationRepository
+    init(repository: Repository) {
+        self.repository = repository
     }
     
     @MainActor
     func login() async {
 
         do {
-            let response = try await authenticationRepository.login(email: email, password: password)
+            let response = try await repository.login(email: email, password: password)
             print(response)
             isLogged = true
             
         } catch {
+            if error.localizedDescription.contains("401") {
+                errorMessage = "Bad Credentials"
+            } else {
+                errorMessage = "Server Error"
+            }
+            print(errorMessage)
             isLogged = false
         }
     }
