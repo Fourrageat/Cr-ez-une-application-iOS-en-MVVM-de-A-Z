@@ -8,11 +8,6 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var firstName: String = ""
-    @State private var lastName: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var passwordConfirmation: String = ""
     
     @FocusState private var focusedField: Field?
     @State private var isAppeared: Bool = false
@@ -20,6 +15,8 @@ struct RegisterView: View {
     @State private var showError: Bool = false
     @State private var isKeyboardVisible: Bool = false
 
+    @StateObject private var viewModel = RegisterViewModel(repository: Repository())
+    
     private enum Field { case email, password, passwordConfirmation, firstName, lastName }
 
     var body: some View {
@@ -41,12 +38,12 @@ struct RegisterView: View {
                                     Text("First name")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
-                                        .offset(y: (firstName.isEmpty && focusedField != .firstName) ? 0 : -18)
-                                        .scaleEffect((firstName.isEmpty && focusedField != .firstName) ? 1 : 0.9, anchor: .leading)
+                                        .offset(y: (viewModel.firstName.isEmpty && focusedField != .firstName) ? 0 : -18)
+                                        .scaleEffect((viewModel.firstName.isEmpty && focusedField != .firstName) ? 1 : 0.9, anchor: .leading)
                                         .opacity(0.9)
                                         .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: firstName)
-                                    TextField("", text: $firstName)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.firstName)
+                                    TextField("", text: $viewModel.firstName)
                                         .textContentType(.name)
                                         .keyboardType(.default)
                                         .focused($focusedField, equals: .firstName)
@@ -65,12 +62,12 @@ struct RegisterView: View {
                                     Text("Last name")
                                         .font(.caption)
                                         .foregroundStyle(.secondary)
-                                        .offset(y: (lastName.isEmpty && focusedField != .lastName) ? 0 : -18)
-                                        .scaleEffect((lastName.isEmpty && focusedField != .lastName) ? 1 : 0.9, anchor: .leading)
+                                        .offset(y: (viewModel.lastName.isEmpty && focusedField != .lastName) ? 0 : -18)
+                                        .scaleEffect((viewModel.lastName.isEmpty && focusedField != .lastName) ? 1 : 0.9, anchor: .leading)
                                         .opacity(0.9)
                                         .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: lastName)
-                                    TextField("", text: $lastName)
+                                        .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.lastName)
+                                    TextField("", text: $viewModel.lastName)
                                         .textContentType(.name)
                                         .keyboardType(.default)
                                         .focused($focusedField, equals: .lastName)
@@ -90,12 +87,12 @@ struct RegisterView: View {
                                 Text("Email")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
-                                    .offset(y: (email.isEmpty && focusedField != .email) ? 0 : -18)
-                                    .scaleEffect((email.isEmpty && focusedField != .email) ? 1 : 0.9, anchor: .leading)
+                                    .offset(y: (viewModel.email.isEmpty && focusedField != .email) ? 0 : -18)
+                                    .scaleEffect((viewModel.email.isEmpty && focusedField != .email) ? 1 : 0.9, anchor: .leading)
                                     .opacity(0.9)
                                     .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: email)
-                                TextField("", text: $email)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.email)
+                                TextField("", text: $viewModel.email)
                                     .textContentType(.emailAddress)
                                     .keyboardType(.emailAddress)
                                     .autocapitalization(.none)
@@ -120,12 +117,12 @@ struct RegisterView: View {
                                 Text("Password")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
-                                    .offset(y: (password.isEmpty && focusedField != .password) ? 0 : -18)
-                                    .scaleEffect((password.isEmpty && focusedField != .password) ? 1 : 0.9, anchor: .leading)
+                                    .offset(y: (viewModel.password.isEmpty && focusedField != .password) ? 0 : -18)
+                                    .scaleEffect((viewModel.password.isEmpty && focusedField != .password) ? 1 : 0.9, anchor: .leading)
                                     .opacity(0.9)
                                     .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: password)
-                                SecureField("", text: $password)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.password)
+                                SecureField("", text: $viewModel.password)
                                     .textContentType(.password)
                                     .focused($focusedField, equals: .password)
                                     .submitLabel(.go)
@@ -147,12 +144,12 @@ struct RegisterView: View {
                                 Text("Confirm password")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
-                                    .offset(y: (passwordConfirmation.isEmpty && focusedField != .passwordConfirmation) ? 0 : -18)
-                                    .scaleEffect((passwordConfirmation.isEmpty && focusedField != .passwordConfirmation) ? 1 : 0.9, anchor: .leading)
+                                    .offset(y: (viewModel.passwordConfirmation.isEmpty && focusedField != .passwordConfirmation) ? 0 : -18)
+                                    .scaleEffect((viewModel.passwordConfirmation.isEmpty && focusedField != .passwordConfirmation) ? 1 : 0.9, anchor: .leading)
                                     .opacity(0.9)
                                     .animation(.spring(response: 0.35, dampingFraction: 0.9), value: focusedField)
-                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: passwordConfirmation)
-                                SecureField("", text: $passwordConfirmation)
+                                    .animation(.spring(response: 0.35, dampingFraction: 0.9), value: viewModel.passwordConfirmation)
+                                SecureField("", text: $viewModel.passwordConfirmation)
                                     .textContentType(.password)
                                     .focused($focusedField, equals: .passwordConfirmation)
                                     .submitLabel(.go)
@@ -162,7 +159,7 @@ struct RegisterView: View {
                         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                         .overlay(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .stroke(borderColorForPassword, lineWidth: 1)
+                                .stroke(borderColorForPasswordConfirmation, lineWidth: 1)
                         )
                         .shadow(color: Color.black.opacity(0.06), radius: 12, x: 0, y: 6)
                     }
@@ -181,18 +178,18 @@ struct RegisterView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(isFormValid ? Color.accentColor : Color.accentColor.opacity(0.5))
+                        .background(viewModel.isFormValid ? Color.accentColor : Color.accentColor.opacity(0.5))
                         .foregroundStyle(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                        .shadow(color: Color.accentColor.opacity(isFormValid ? 0.25 : 0.0), radius: 14, x: 0, y: 8)
+                        .shadow(color: Color.accentColor.opacity(viewModel.isFormValid ? 0.25 : 0.0), radius: 14, x: 0, y: 8)
                         .scaleEffect(isCreating ? 0.98 : 1)
                         .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isCreating)
                     }
-                    .disabled(!isFormValid || isCreating)
+                    .disabled(!viewModel.isFormValid || isCreating)
                     .accessibilityLabel("Create")
 
                     if showError {
-                        Text(!isPasswordValid ? "Passwords are different. Try again." : "Unknown error")
+                        Text(!viewModel.isPasswordValid ? "Passwords are different. Try again." : "Unknown error")
                             .font(.footnote)
                             .foregroundStyle(.red)
                             .transition(.opacity.combined(with: .move(edge: .top)))
@@ -229,27 +226,10 @@ struct RegisterView: View {
         }
     }
 
-    private var isFormValid: Bool {
-        !firstName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !lastName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        isEmailValid &&
-        !password.isEmpty &&
-        !passwordConfirmation.isEmpty
-    }
-    
-    private var isEmailValid: Bool {
-        let pattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES[c] %@", pattern)
-        return predicate.evaluate(with: email.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-    
-    private var isPasswordValid: Bool {
-        password == passwordConfirmation
-    }
+
     
     private var borderColorForEmail: Color {
-        if !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isEmailValid { return .red }
+        if !viewModel.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isEmailValid { return .red }
         return focusedField == .email ? .accentColor : Color.secondary.opacity(0.3)
     }
 
@@ -264,7 +244,7 @@ struct RegisterView: View {
     }
 
     private func create() {
-        guard isFormValid && isPasswordValid else {
+        guard viewModel.isFormValid && viewModel.isPasswordValid else {
             withAnimation(.default) { showError = true }
             shake()
             return
@@ -272,16 +252,24 @@ struct RegisterView: View {
         showError = false
         isCreating = true
         // Simulate async sign-in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
-                isCreating = false
-                // Flip to success or show error example
-                let success = Bool.random()
-                if !success {
-                    showError = true
-                    shake()
+        Task {
+            // Call into the view model to perform login using its own email/password state
+            try await viewModel.register()
+
+            if viewModel.isLogged {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    showError = false
+                    isCreating = false
+                    
                 }
+            } else {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    showError = true
+                    isCreating = false
+                }
+                shake()
             }
+            
         }
     }
 
