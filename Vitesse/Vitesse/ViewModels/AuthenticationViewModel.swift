@@ -24,7 +24,7 @@ class AuthenticationViewModel: ObservableObject {
     func login() async {
 
         do {
-            let response = try await repository.login(email: email, password: password)
+            _ = try await repository.login(email: email, password: password)
             isLogged = true
             
         } catch {
