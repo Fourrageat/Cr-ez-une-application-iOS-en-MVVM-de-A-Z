@@ -25,6 +25,7 @@
 		F49AA2392EF062C200240CA0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA2382EF062A500240CA0 /* Repository.swift */; };
 		F49AA23D2EF06A0700240CA0 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA23C2EF069F800240CA0 /* AuthenticationViewModel.swift */; };
 		F49AA2402EF17BF300240CA0 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA23F2EF17BED00240CA0 /* Keychain.swift */; };
+		F49AA2442EF1C5CA00240CA0 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49AA2432EF1C5B700240CA0 /* RegisterViewModel.swift */; };
 		F4C5DA492EE30D5000771A81 /* CandidatesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5DA482EE30D5000771A81 /* CandidatesListViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		F49AA2382EF062A500240CA0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		F49AA23C2EF069F800240CA0 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		F49AA23F2EF17BED00240CA0 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		F49AA2432EF1C5B700240CA0 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		F4C5DA482EE30D5000771A81 /* CandidatesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,6 +182,7 @@
 		F4907C6C2EE07A4400E79D35 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F49AA2432EF1C5B700240CA0 /* RegisterViewModel.swift */,
 				F49AA23C2EF069F800240CA0 /* AuthenticationViewModel.swift */,
 				F4C5DA482EE30D5000771A81 /* CandidatesListViewModel.swift */,
 			);
@@ -347,6 +350,7 @@
 				F4C5DA492EE30D5000771A81 /* CandidatesListViewModel.swift in Sources */,
 				F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */,
 				F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */,
+				F49AA2442EF1C5CA00240CA0 /* RegisterViewModel.swift in Sources */,
 				F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */,
 				F425036E2EE20121007D79A1 /* Candidate.swift in Sources */,
 				F49AA2392EF062C200240CA0 /* Repository.swift in Sources */,
