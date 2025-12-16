@@ -106,11 +106,14 @@ final class Repository: RepositoryProtocol {
     // GET /candidate
     func fetchCandidates() async throws -> Candidates {
         let url = baseURL.appending(path: "/candidate")
+        guard let token = try? Keychain.get("auth_token") else {
+            fatalError("Token not found")
+        }
         let request = try URLRequest(
             url: url,
             method: .GET,
             parameters: nil,
-            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
         return try await perform(Candidates.self, request: request)
     }
@@ -118,11 +121,14 @@ final class Repository: RepositoryProtocol {
     // GET /candidate/:candidateId
     func fetchCandidate(id: String) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)")
+        guard let token = try? Keychain.get("auth_token") else {
+            fatalError("Token not found")
+        }
         let request = try URLRequest(
             url: url,
             method: .GET,
             parameters: nil,
-            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
         return try await perform(Candidate.self, request: request)
     }
@@ -138,6 +144,9 @@ final class Repository: RepositoryProtocol {
         linkedinURL: String?
     ) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)")
+        guard let token = try? Keychain.get("auth_token") else {
+            fatalError("Token not found")
+        }
         let request = try URLRequest(
             url: url,
             method: .PUT,
@@ -149,19 +158,22 @@ final class Repository: RepositoryProtocol {
                 note: note,
                 linkedinURL: linkedinURL
             )),
-            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
         return try await perform(Candidate.self, request: request)
     }
     
     // DELETE /candidate/:candidate
     func deleteCandidate(id: String) async throws {
-        let url = baseURL.appending(queryItems: [URLQueryItem(name: "id", value: id)])
+        let url = baseURL.appending(path: "/candidate/\(id)")
+        guard let token = try? Keychain.get("auth_token") else {
+            fatalError("Token not found")
+        }
         let request = try URLRequest(
             url: url,
             method: .DELETE,
             parameters: nil,
-            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
         _ = try await perform(EmptyDecodable.self, request: request)
     }
@@ -169,11 +181,14 @@ final class Repository: RepositoryProtocol {
     // PUT /candidate/:candidateId/favorite
     func updateFavoriteCandidate(id: String) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)/favorite")
+        guard let token = try? Keychain.get("auth_token") else {
+            fatalError("Token not found")
+        }
         let request = try URLRequest(
             url: url,
             method: .PUT,
             parameters: nil,
-            headers: ["Accept": "application/json", "Authorization": "Bearer \(UserDefaults.standard.string(forKey: "token")!)"]
+            headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
         return try await perform(Candidate.self, request: request)
     }
