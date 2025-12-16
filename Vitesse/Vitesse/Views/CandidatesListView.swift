@@ -23,7 +23,16 @@ struct CandidatesListView: View {
                     }
             }
         }
+        .task {
+            do {
+                try await viewModel.getCandidates()
+            } catch {
+                // TODO: handle error (e.g., show an alert or log)
+                print("Failed to get candidates: \(error)")
+            }
+        }
     }
+    
 
     private var content: some View {
         VStack(spacing: 0) {
