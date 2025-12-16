@@ -260,6 +260,7 @@ struct RegisterView: View {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     showError = false
                     isCreating = false
+                    
                 }
             } else {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {

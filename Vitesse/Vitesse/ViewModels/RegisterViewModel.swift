@@ -17,7 +17,6 @@ class RegisterViewModel: ObservableObject {
     @Published var passwordConfirmation: String = ""
     
     @Published var isLogged: Bool = false
-    @Published var errorMessage: String = ""
     
     private let repository: Repository
 
@@ -50,13 +49,15 @@ class RegisterViewModel: ObservableObject {
         do {
             _ = try await repository.register(email: email, password: password, firstName: firstName, lastName: lastName)
             
+            firstName = ""
+            lastName = ""
+            email = ""
+            password = ""
+            passwordConfirmation = ""
+            
             isLogged = true
         } catch {
-            if error.localizedDescription.contains("401") {
-                errorMessage = "Bad Credentials"
-            } else {
-                errorMessage = "Server Error"
-            }
+
             isLogged = false
         }
     }
