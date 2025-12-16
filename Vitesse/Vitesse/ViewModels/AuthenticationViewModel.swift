@@ -27,10 +27,12 @@ class AuthenticationViewModel: ObservableObject {
             let response = try await repository.login(email: email, password: password)
             do {
                 try Keychain.set(response.token, for: "auth_token")
+                UserDefaults.standard.set(response.isAdmin, forKey: "is_admin")
             } catch {
-                print("Failed to store token in Keychain: \(error)")
+                print("Error saving token in Keychain: \(error)")
                 throw error
             }
+            
             isLogged = true
         } catch {
             if error.localizedDescription.contains("401") {
