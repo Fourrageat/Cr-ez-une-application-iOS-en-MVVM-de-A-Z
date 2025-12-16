@@ -24,9 +24,14 @@ class AuthenticationViewModel: ObservableObject {
     func login() async {
 
         do {
-            _ = try await repository.login(email: email, password: password)
+            let response = try await repository.login(email: email, password: password)
+            do {
+                try Keychain.set(response.token, for: "auth_token")
+            } catch {
+                print("Failed to store token in Keychain: \(error)")
+                throw error
+            }
             isLogged = true
-            
         } catch {
             if error.localizedDescription.contains("401") {
                 errorMessage = "Bad Credentials"
