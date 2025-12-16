@@ -8,15 +8,28 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
-    private let allCandidates: [Candidate]
+    let repository: RepositoryProtocol = Repository()
     
-    init(candidates: [Candidate] = Samples.candidates) {
+    private var allCandidates: [Candidate]
+    
+    init(candidates: [Candidate] = []) {
         self.candidates = candidates
         self.allCandidates = candidates
     }
     
+    func getCandidates() async throws {
+        do {
+            let response = try await repository.fetchCandidates()
+            print(response)
+            candidates = response
+            allCandidates = response
+        } catch {
+            print("Failed to fetch candidates: \(error)")
+        }
+    }
+    
     func applyFilters() {
-        var result = allCandidates
+        var result: [Candidate] = allCandidates
         if showFavoritesOnly {
             result = result.filter { $0.isFavorite }
         }
@@ -33,7 +46,7 @@ final class CandidatesListViewModel: ObservableObject {
         }
         
         let query = text.lowercased()
-        var result = allCandidates.filter { candidate in
+        var result: [Candidate] = allCandidates.filter { candidate in
             let first = candidate.firstName.lowercased()
             let last = candidate.lastName.lowercased()
 
@@ -66,4 +79,3 @@ final class CandidatesListViewModel: ObservableObject {
         selectedIDs.removeAll()
     }
 }
-

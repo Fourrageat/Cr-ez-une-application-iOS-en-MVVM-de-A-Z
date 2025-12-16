@@ -40,17 +40,24 @@ struct Candidate: Identifiable, Hashable, Codable {
     let linkedinURL: String?
 }
 
-struct Candidates: Codable {
-    let candidates: [Candidate]
-}
-
-
 // MARK: - Protocol
 
 protocol RepositoryProtocol {
     func login(email: String, password: String) async throws -> AuthResponse
     func register(email: String, password: String, firstName: String, lastName: String) async throws -> Void
-    func fetchCandidates() async throws -> Candidates
+    func fetchCandidates() async throws -> [Candidate]
+    func fetchCandidate(id: String) async throws -> Candidate
+    func updateCandidate(
+        id: String,
+        firstName: String,
+        lastName: String,
+        phone: String?,
+        email: String,
+        note: String?,
+        linkedinURL: String?
+    ) async throws -> Candidate
+    func deleteCandidate(id: String) async throws -> Void
+    func updateFavoriteCandidate(id: String) async throws -> Candidate
 }
 
 // MARK: - Repository
@@ -104,7 +111,7 @@ final class Repository: RepositoryProtocol {
     }
     
     // GET /candidate
-    func fetchCandidates() async throws -> Candidates {
+    func fetchCandidates() async throws -> [Candidate] {
         let url = baseURL.appending(path: "/candidate")
         guard let token = try? Keychain.get("auth_token") else {
             fatalError("Token not found")
@@ -115,7 +122,7 @@ final class Repository: RepositoryProtocol {
             parameters: nil,
             headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
-        return try await perform(Candidates.self, request: request)
+        return try await perform([Candidate].self, request: request)
     }
     
     // GET /candidate/:candidateId
