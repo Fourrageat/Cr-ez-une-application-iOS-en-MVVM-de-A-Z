@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct CandidateView: View {
-    var candidate: Candidate
-    
-    @State var isEditing: Bool = false
-    @State private var editedPhone: String = ""
-    @State private var editedEmail: String = ""
-    @State private var editedLinkedinURL: String = ""
-    @State private var editedNote: String = ""
+    @StateObject private var viewModel: CandidateViewModel
+
+    init(candidate: Candidate) {
+        _viewModel = StateObject(wrappedValue: CandidateViewModel(candidate: candidate))
+    }
     
     var body: some View {
         ZStack {
@@ -22,63 +20,68 @@ struct CandidateView: View {
             
             VStack(alignment: .leading, spacing: 40) {
                 HStack {
-                    Text("\(candidate.firstName) \(candidate.lastName.first.map { String($0) } ?? "").")
+                    Text("\(viewModel.candidate.firstName) \(viewModel.candidate.lastName.first.map { String($0) } ?? "").")
                         .font(.system(size: 35, weight: .bold))
                     Spacer()
-                    Image(systemName: candidate.isFavorite ? "star.fill" : "star")
-                        .foregroundStyle(candidate.isFavorite ? .yellow: .primary)
+                    Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
+                        .foregroundStyle(viewModel.candidate.isFavorite ? .yellow: .primary)
                         .font(.system(size: 35))
                 }
 
-                if isEditing {
-                    CandidateEditView(editedPhone: $editedPhone,
-                                      editedEmail: $editedEmail,
-                                      editedLinkedinURL: $editedLinkedinURL,
-                                      editedNote: $editedNote)
+                if viewModel.isEditing {
+                    CandidateEditView(editedPhone: $viewModel.editedPhone,
+                                      editedEmail: $viewModel.editedEmail,
+                                      editedLinkedinURL: $viewModel.editedLinkedinURL,
+                                      editedNote: $viewModel.editedNote)
                 } else {
-                    CandidateReadOnlyView(candidate: candidate,
-                                          phone: editedPhone,
-                                          email: editedEmail,
-                                          linkedinURL: editedLinkedinURL,
-                                          note: editedNote)
+                    CandidateReadOnlyView(candidate: viewModel.candidate,
+                                          phone: viewModel.editedPhone,
+                                          email: viewModel.editedEmail,
+                                          linkedinURL: viewModel.editedLinkedinURL,
+                                          note: viewModel.editedNote)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
-            .onAppear {
-                editedPhone = candidate.phone ?? ""
-                editedEmail = candidate.email
-                editedLinkedinURL = candidate.linkedinURL ?? ""
-                editedNote = candidate.note ?? ""
+            .task {
+                do {
+                    try await viewModel.loadCandidateId()
+                } catch {
+                    // Handle or log the error as appropriate for your app
+                    print("Failed to load candidate id: \(error)")
+                }
             }
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    isEditing.toggle()
+                    viewModel.toggleEditing()
                 } label: {
-                    if isEditing {
+                    if viewModel.isEditing {
                         Text("Done")
                     } else {
                         Text("Edit")
                     }
                 }
             }
-            if isEditing {
+            if viewModel.isEditing {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        editedPhone = candidate.phone ?? ""
-                        editedEmail = candidate.email
-                        editedLinkedinURL = candidate.linkedinURL ?? ""
-                        editedNote = candidate.note ?? ""
-                        isEditing = false
+                        Task {
+                            do {
+                                try await viewModel.cancelEditing()
+                            } catch {
+                                // Handle or log the error as appropriate for your app
+                                print("Failed to cancel editing: \(error)")
+                            }
+                        }
                     } label: {
                         Text("Cancel")
                     }
                 }
             }
         }
-        .navigationBarBackButtonHidden(isEditing)
+        .navigationBarBackButtonHidden(viewModel.isEditing)
     }
 }
 
