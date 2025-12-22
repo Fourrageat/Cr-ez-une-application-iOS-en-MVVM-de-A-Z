@@ -10,11 +10,10 @@ import SwiftUI
 struct CandidateView: View {
     private let candidate: Candidate
 
-    @ObservedObject private var viewModel: CandidateViewModel
+    @ObservedObject private var viewModel = CandidateViewModel()
 
     init(candidate: Candidate) {
         self.candidate = candidate
-        viewModel = .init(candidateId: candidate.id)
     }
     
     var body: some View {
@@ -63,6 +62,30 @@ struct CandidateView: View {
                         }
                     } label: {
                         Text("Cancel")
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        Task {
+                            do {
+                                viewModel.doneEditing()
+                            }
+                        }
+                    } label: {
+                        Text("Done")
+                    }
+                }
+            }
+            else {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        Task {
+                            do {
+                                viewModel.isEditing.toggle()
+                            }
+                        }
+                    } label: {
+                        Text("Edit")
                     }
                 }
             }

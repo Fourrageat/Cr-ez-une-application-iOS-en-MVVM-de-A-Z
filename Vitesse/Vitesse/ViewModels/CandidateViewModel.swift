@@ -22,9 +22,9 @@ final class CandidateViewModel: ObservableObject {
 
     private let repository: RepositoryProtocol
 
-    init(candidateId: UUID) {
+    init() {
         self.repository = Repository()
-        self.candidate = Candidate(id: candidateId, firstName: "", lastName: "", phone: nil, email: "", note: nil, linkedinURL: nil)
+        self.candidate = Candidate(id: UUID(), firstName: "", lastName: "", phone: nil, email: "", note: nil, linkedinURL: nil)
         self.candidateFirstName = ""
         self.candidateLastName = ""
         self.candidateEmail = ""
@@ -44,18 +44,9 @@ final class CandidateViewModel: ObservableObject {
             self.candidatePhone = candidateResponse.phone ?? ""
             self.candidateLinkedinURL = candidateResponse.linkedinURL ?? ""
             self.candidateNote = candidateResponse.note ?? ""
-            print(candidate)
         } catch {
             print("Error fetching candidate: \(error)")
         }
-    }
-
-    func toggleEditing() {
-        isEditing.toggle()
-    }
-
-    func startEditing() {
-        isEditing = true
     }
 
     func doneEditing() {
@@ -63,7 +54,7 @@ final class CandidateViewModel: ObservableObject {
     }
 
     func cancelEditing() async throws {
-        try await fetchCandidate(candidateId: candidate.id)
+        await fetchCandidate(candidateId: candidate.id)
         isEditing = false
     }
 }
