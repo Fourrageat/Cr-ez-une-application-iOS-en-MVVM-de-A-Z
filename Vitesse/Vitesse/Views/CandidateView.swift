@@ -8,62 +8,49 @@
 import SwiftUI
 
 struct CandidateView: View {
-    @StateObject private var viewModel: CandidateViewModel
+    private let candidate: Candidate
+
+    @ObservedObject private var viewModel: CandidateViewModel
 
     init(candidate: Candidate) {
-        _viewModel = StateObject(wrappedValue: CandidateViewModel(candidate: candidate))
+        self.candidate = candidate
+        viewModel = .init(candidateId: candidate.id)
     }
     
     var body: some View {
         ZStack {
             AppBackground()
-            
-            VStack(alignment: .leading, spacing: 40) {
-                HStack {
-                    Text("\(viewModel.candidate.firstName) \(viewModel.candidate.lastName.first.map { String($0) } ?? "").")
-                        .font(.system(size: 35, weight: .bold))
-                    Spacer()
-                    Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
-                        .foregroundStyle(viewModel.candidate.isFavorite ? .yellow: .primary)
-                        .font(.system(size: 35))
+
+            Group {
+                VStack(alignment: .leading, spacing: 40) {
+                    HStack {
+                        Text("\(viewModel.candidate.firstName) \(viewModel.candidate.lastName.first.map { String($0) } ?? "").")
+                            .font(.system(size: 35, weight: .bold))
+                        Spacer()
+                        Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
+                            .foregroundStyle(viewModel.candidate.isFavorite ? .yellow: .primary)
+                            .font(.system(size: 35))
+                    }
+
+                    if viewModel.isEditing {
+                        CandidateEditView(editedPhone: Binding(get: { viewModel.candidatePhone }, set: { viewModel.candidatePhone = $0 }),
+                                          editedEmail: Binding(get: { viewModel.candidateEmail }, set: { viewModel.candidateEmail = $0 }),
+                                          editedLinkedinURL: Binding(get: { viewModel.candidateLinkedinURL }, set: { viewModel.candidateLinkedinURL = $0 }),
+                                          editedNote: Binding(get: { viewModel.candidateNote }, set: { viewModel.candidateNote = $0 }))
+                    } else {
+                        CandidateReadOnlyView(candidate: viewModel.candidate,
+                                              phone: viewModel.candidatePhone,
+                                              email: viewModel.candidateEmail,
+                                              linkedinURL: viewModel.candidateLinkedinURL,
+                                              note: viewModel.candidateNote)
+                    }
                 }
 
-                if viewModel.isEditing {
-                    CandidateEditView(editedPhone: $viewModel.editedPhone,
-                                      editedEmail: $viewModel.editedEmail,
-                                      editedLinkedinURL: $viewModel.editedLinkedinURL,
-                                      editedNote: $viewModel.editedNote)
-                } else {
-                    CandidateReadOnlyView(candidate: viewModel.candidate,
-                                          phone: viewModel.editedPhone,
-                                          email: viewModel.editedEmail,
-                                          linkedinURL: viewModel.editedLinkedinURL,
-                                          note: viewModel.editedNote)
-                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(30)
-            .task {
-                do {
-                    try await viewModel.loadCandidateId()
-                } catch {
-                    // Handle or log the error as appropriate for your app
-                    print("Failed to load candidate id: \(error)")
-                }
-            }
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    viewModel.toggleEditing()
-                } label: {
-                    if viewModel.isEditing {
-                        Text("Done")
-                    } else {
-                        Text("Edit")
-                    }
-                }
-            }
             if viewModel.isEditing {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -71,7 +58,6 @@ struct CandidateView: View {
                             do {
                                 try await viewModel.cancelEditing()
                             } catch {
-                                // Handle or log the error as appropriate for your app
                                 print("Failed to cancel editing: \(error)")
                             }
                         }
@@ -82,6 +68,9 @@ struct CandidateView: View {
             }
         }
         .navigationBarBackButtonHidden(viewModel.isEditing)
+        .task {
+            await viewModel.fetchCandidate(candidateId: candidate.id)
+        }
     }
 }
 
@@ -237,16 +226,6 @@ struct OpenLinkButton: View {
 }
 
 #Preview {
-    NavigationStack {
-        CandidateView(candidate: Candidate(
-            firstName: "John",
-            lastName: "Smith",
-            isFavorite: false,
-            phone: "+1 (555) 123-4567",
-            email: "john.smith@example.com",
-            note: "Met at iOS meetup. Strong SwiftUI skills.",
-            linkedinURL: "https://www.linkedin.com/in/johnsmith"
-        ))
-    }
+
 }
 
