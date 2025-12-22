@@ -20,7 +20,7 @@ final class CandidateViewModel: ObservableObject {
     @Published var candidateLinkedinURL: String = ""
     @Published var candidateNote: String = ""
 
-    let repository: RepositoryProtocol
+    private let repository: RepositoryProtocol
 
     init(candidateId: UUID) {
         self.repository = Repository()
