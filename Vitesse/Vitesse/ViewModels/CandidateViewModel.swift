@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 import Combine
 
+@MainActor
 final class CandidateViewModel: ObservableObject {
     
     @Published var candidate: Candidate
@@ -33,19 +34,29 @@ final class CandidateViewModel: ObservableObject {
         self.candidateNote = ""
     }
 
-    @MainActor
-    func fetchCandidate(candidateId: UUID) async {
-        do {
-            let candidateResponse = try await repository.fetchCandidate(id: candidateId.uuidString)
-            self.candidate = candidateResponse
-            self.candidateFirstName = candidateResponse.firstName
-            self.candidateLastName = candidateResponse.lastName
-            self.candidateEmail = candidateResponse.email
-            self.candidatePhone = candidateResponse.phone ?? ""
-            self.candidateLinkedinURL = candidateResponse.linkedinURL ?? ""
-            self.candidateNote = candidateResponse.note ?? ""
-        } catch {
-            print("Error fetching candidate: \(error)")
+    convenience init(candidateId: UUID) {
+        self.init()
+        Task { [weak self] in
+            guard let self else { return }
+            try? await self.fetchCandidate(candidateId: candidateId)
+        }
+    }
+
+    func fetchCandidate(candidateId: UUID) async throws {
+        let candidateResponse = try await repository.fetchCandidate(id: candidateId.uuidString)
+        self.candidate = candidateResponse
+        self.candidateFirstName = candidateResponse.firstName
+        self.candidateLastName = candidateResponse.lastName
+        self.candidateEmail = candidateResponse.email
+        self.candidatePhone = candidateResponse.phone ?? ""
+        self.candidateLinkedinURL = candidateResponse.linkedinURL ?? ""
+        self.candidateNote = candidateResponse.note ?? ""
+    }
+
+    func load(candidateId: UUID) {
+        Task { [weak self] in
+            guard let self else { return }
+            try? await self.fetchCandidate(candidateId: candidateId)
         }
     }
 
@@ -53,8 +64,12 @@ final class CandidateViewModel: ObservableObject {
         isEditing = false
     }
 
-    func cancelEditing() async throws {
-        await fetchCandidate(candidateId: candidate.id)
-        isEditing = false
+    func cancelEditing() {
+        Task { [weak self] in
+            guard let self else { return }
+            try? await self.fetchCandidate(candidateId: self.candidate.id)
+            self.isEditing = false
+        }
     }
 }
+
