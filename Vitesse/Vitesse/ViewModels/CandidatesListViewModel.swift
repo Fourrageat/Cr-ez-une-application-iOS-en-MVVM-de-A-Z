@@ -20,7 +20,6 @@ final class CandidatesListViewModel: ObservableObject {
     func getCandidates() async throws {
         do {
             let response = try await repository.fetchCandidates()
-            print(response)
             candidates = response
             allCandidates = response
         } catch {
