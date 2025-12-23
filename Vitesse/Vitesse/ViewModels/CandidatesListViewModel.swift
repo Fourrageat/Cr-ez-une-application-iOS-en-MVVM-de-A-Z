@@ -20,43 +20,46 @@ final class CandidatesListViewModel: ObservableObject {
     func getCandidates() async throws {
         do {
             let response = try await repository.fetchCandidates()
-            candidates = response
             allCandidates = response
+            applyFilters()
         } catch {
             print("Failed to fetch candidates: \(error)")
         }
     }
     
     func applyFilters() {
-        var result: [Candidate] = allCandidates
+        // Start from the full dataset
+        var result = allCandidates
+
+        // Apply favorites filter if needed
         if showFavoritesOnly {
             result = result.filter { $0.isFavorite }
         }
+
+        // Apply search filter if needed
+        let trimmed = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty {
+            let query = trimmed.lowercased()
+            result = result.filter { candidate in
+                let first = candidate.firstName.lowercased()
+                let last = candidate.lastName.lowercased()
+                return first.contains(query) || last.contains(query)
+            }
+        }
+
+        // Publish
         candidates = result
     }
     
+    func toggleFavoritesOnly() {
+        showFavoritesOnly.toggle()
+        applyFilters()
+    }
+    
     func searchFilter(_ text: String) {
-
-        let base = showFavoritesOnly ? allCandidates.filter { $0.isFavorite } : allCandidates
-
-        guard !search.isEmpty else {
-            candidates = base
-            return
-        }
-        
-        let query = text.lowercased()
-        var result: [Candidate] = allCandidates.filter { candidate in
-            let first = candidate.firstName.lowercased()
-            let last = candidate.lastName.lowercased()
-
-            return first.contains(query) || last.contains(query)
-        }
-
-        if showFavoritesOnly {
-            result = result.filter { $0.isFavorite }
-        }
-
-        candidates = result
+        // Update stored search text and re-apply combined filters
+        self.search = text
+        applyFilters()
     }
     
     func toggleSelection(for candidate: Candidate) {
