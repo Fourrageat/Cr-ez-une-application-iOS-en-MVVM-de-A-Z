@@ -67,9 +67,7 @@ struct CandidateView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            do {
-                                viewModel.doneEditing()
-                            }
+                            viewModel.doneEditing()
                         }
                     } label: {
                         Text("Done")
@@ -80,9 +78,7 @@ struct CandidateView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            do {
-                                viewModel.isEditing.toggle()
-                            }
+                            viewModel.isEditing.toggle()
                         }
                     } label: {
                         Text("Edit")
@@ -92,7 +88,11 @@ struct CandidateView: View {
         }
         .navigationBarBackButtonHidden(viewModel.isEditing)
         .task {
-            await viewModel.fetchCandidate(candidateId: candidate.id)
+            do {
+                try await viewModel.fetchCandidate(candidateId: candidate.id)
+            } catch {
+                print("Failed to fetch candidate: \(error)")
+            }
         }
     }
 }
