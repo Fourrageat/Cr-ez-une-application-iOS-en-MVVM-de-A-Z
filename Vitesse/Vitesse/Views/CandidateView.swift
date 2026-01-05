@@ -55,9 +55,7 @@ struct CandidateView: View {
                     Button {
                         Task {
                             do {
-                                try await viewModel.cancelEditing()
-                            } catch {
-                                print("Failed to cancel editing: \(error)")
+                                viewModel.cancelEditing()
                             }
                         }
                     } label: {
@@ -67,7 +65,7 @@ struct CandidateView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            viewModel.doneEditing()
+                            await viewModel.doneEditing()
                         }
                     } label: {
                         Text("Done")

@@ -60,7 +60,6 @@ final class CandidateViewModel: ObservableObject {
         lastError = nil
         do {
             let candidateResponse = try await repository.fetchCandidate(id: candidateId.uuidString)
-            // Assign all published properties on the main actor (we already are on MainActor)
             self.candidate = candidateResponse
             self.candidateFirstName = candidateResponse.firstName
             self.candidateLastName = candidateResponse.lastName
@@ -78,18 +77,42 @@ final class CandidateViewModel: ObservableObject {
     }
 
     func load(candidateId: UUID) {
-        // Start a top-level Task on the main actor; self is a @MainActor class so captures are safe
         Task { [candidateId] in
             do {
                 try await fetchCandidate(candidateId: candidateId)
             } catch {
-                // Error already captured in lastError/loadState in fetchCandidate
+                print("Error fetching candidate: \(error)")
             }
         }
     }
 
-    func doneEditing() {
+    func doneEditing() async {
         isEditing = false
+        do {
+            let updatedCandidate = try await repository.updateCandidate(
+                id: candidate.id.uuidString,
+                firstName: candidateFirstName,
+                lastName: candidateLastName,
+                phone: candidatePhone,
+                email: candidateEmail,
+                note: candidateNote,
+                linkedinURL: candidateLinkedinURL
+            )
+            self.candidate = updatedCandidate
+            self.candidateFirstName = updatedCandidate.firstName
+            self.candidateLastName = updatedCandidate.lastName
+            self.candidateEmail = updatedCandidate.email
+            self.candidatePhone = updatedCandidate.phone ?? ""
+            self.candidateLinkedinURL = updatedCandidate.linkedinURL ?? ""
+            self.candidateNote = updatedCandidate.note ?? ""
+            
+            loadState = .loaded
+            lastError = nil
+        } catch {
+            let message = (error as NSError).localizedDescription
+            lastError = message
+            loadState = .failed(message)
+        }
     }
 
     func cancelEditing() {
