@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F41E17132F0D8262007E1350 /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17122F0D823C007E1350 /* AuthenticationTests.swift */; };
+		F41E17132F0D8262007E1350 /* AuthenticationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */; };
 		F41E17152F0D9EC6007E1350 /* MockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17142F0D9EAF007E1350 /* MockRepository.swift */; };
+		F41E17192F0DA479007E1350 /* RegisterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */; };
 		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
 		F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */; };
 		F42503602EE1D18F007D79A1 /* CandidateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateView.swift */; };
@@ -50,8 +51,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F41E17122F0D823C007E1350 /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
+		F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModelTests.swift; sourceTree = "<group>"; };
 		F41E17142F0D9EAF007E1350 /* MockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepository.swift; sourceTree = "<group>"; };
+		F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModelTests.swift; sourceTree = "<group>"; };
 		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListView.swift; sourceTree = "<group>"; };
 		F425035F2EE1D18F007D79A1 /* CandidateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateView.swift; sourceTree = "<group>"; };
@@ -106,8 +108,9 @@
 		F41E17112F0D81C1007E1350 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */,
 				F41E17142F0D9EAF007E1350 /* MockRepository.swift */,
-				F41E17122F0D823C007E1350 /* AuthenticationTests.swift */,
+				F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -386,7 +389,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F41E17132F0D8262007E1350 /* AuthenticationTests.swift in Sources */,
+				F41E17192F0DA479007E1350 /* RegisterViewModelTests.swift in Sources */,
+				F41E17132F0D8262007E1350 /* AuthenticationViewModelTests.swift in Sources */,
 				F41E17152F0D9EC6007E1350 /* MockRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

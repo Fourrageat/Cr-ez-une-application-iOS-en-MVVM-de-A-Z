@@ -256,7 +256,7 @@ struct RegisterView: View {
             // Call into the view model to perform login using its own email/password state
             try await viewModel.register()
 
-            if viewModel.isLogged {
+            if viewModel.isRegistered {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     showError = false
                     isCreating = false
