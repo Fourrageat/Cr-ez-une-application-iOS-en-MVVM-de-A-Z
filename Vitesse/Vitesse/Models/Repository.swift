@@ -185,7 +185,7 @@ final class Repository: RepositoryProtocol {
         _ = try await perform(EmptyDecodable.self, request: request)
     }
     
-    // PUT /candidate/:candidateId/favorite
+    // POST /candidate/:candidateId/favorite
     func updateFavoriteCandidate(id: String) async throws -> Candidate {
         let url = baseURL.appending(path: "/candidate/\(id)/favorite")
         guard let token = try? Keychain.get("auth_token") else {
@@ -193,7 +193,7 @@ final class Repository: RepositoryProtocol {
         }
         let request = try URLRequest(
             url: url,
-            method: .PUT,
+            method: .POST,
             parameters: nil,
             headers: ["Accept": "application/json", "Authorization": "Bearer \(token)"]
         )
