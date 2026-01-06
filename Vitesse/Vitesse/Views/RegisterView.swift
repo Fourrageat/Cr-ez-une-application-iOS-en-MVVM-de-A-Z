@@ -203,12 +203,12 @@ struct RegisterView: View {
             VStack(spacing: 8) {
                 Text("Register")
                     .font(.title2).bold()
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.secondary)
             }
             .opacity(isKeyboardVisible ? 0 : 1)
             .offset(y: isKeyboardVisible ? -20 : 0)
             .animation(.easeInOut(duration: 0.25), value: isKeyboardVisible)
-            .padding(.top, 40)
+            .padding(.top, 80)
             .padding(.horizontal)
         }
         .onAppear {
