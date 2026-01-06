@@ -70,9 +70,12 @@ final class CandidatesListViewModel: ObservableObject {
         }
     }
     
-    func deleteSelected() {
+    func deleteSelected() async throws {
         guard !selectedIDs.isEmpty else { return }
         candidates.removeAll { selectedIDs.contains($0.id) }
+        for id in selectedIDs {
+            try await repository.deleteCandidate(id: id.uuidString)
+        }
         selectedIDs.removeAll()
     }
     
