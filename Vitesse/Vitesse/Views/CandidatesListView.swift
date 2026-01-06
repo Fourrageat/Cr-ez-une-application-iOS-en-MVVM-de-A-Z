@@ -75,7 +75,11 @@ struct CandidatesListView: View {
         ToolbarItem(placement: .topBarTrailing) {
             if viewModel.isEditing {
                 Button(role: .destructive) {
-                    viewModel.deleteSelected()
+                    Task {
+                        do {
+                            try await viewModel.deleteSelected()
+                        }
+                    }
                 } label: {
                     Label("Delete", systemImage: "trash")
                 }
