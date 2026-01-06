@@ -142,17 +142,17 @@ struct SignInView: View {
             .contentShape(Rectangle())
             .overlay(alignment: .top) {
                 VStack(spacing: 8) {
-                    Image(systemName: "bolt.fill")
+                    Image(systemName: "person.2.fill")
                         .font(.system(size: 40))
                         .foregroundStyle(Color.accentColor)
                     Text("Welcome on Vitesse")
                         .font(.title2).bold()
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.secondary)
                 }
                 .opacity(isKeyboardVisible ? 0 : 1)
                 .offset(y: isKeyboardVisible ? -20 : 0)
                 .animation(.easeInOut(duration: 0.25), value: isKeyboardVisible)
-                .padding(.top, 40)
+                .padding(.top, 80)
                 .padding(.horizontal)
             }
             .navigationDestination(isPresented: $goToRegister) {

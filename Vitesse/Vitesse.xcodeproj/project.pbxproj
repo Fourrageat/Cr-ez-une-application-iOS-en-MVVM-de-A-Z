@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F41E17132F0D8262007E1350 /* AuthenticationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17122F0D823C007E1350 /* AuthenticationTests.swift */; };
 		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
 		F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */; };
 		F42503602EE1D18F007D79A1 /* CandidateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateView.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F41E17122F0D823C007E1350 /* AuthenticationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTests.swift; sourceTree = "<group>"; };
 		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListView.swift; sourceTree = "<group>"; };
 		F425035F2EE1D18F007D79A1 /* CandidateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F41E17112F0D81C1007E1350 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F41E17122F0D823C007E1350 /* AuthenticationTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		F425036F2EE2012B007D79A1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				F43C17DF2EDF7B5C009D9423 /* Vitesse */,
+				F41E17112F0D81C1007E1350 /* Tests */,
 				F43C17B32EDF7909009D9423 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -372,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41E17132F0D8262007E1350 /* AuthenticationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,7 +613,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MF8276A56P;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.VitesseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -623,7 +635,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MF8276A56P;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.VitesseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
