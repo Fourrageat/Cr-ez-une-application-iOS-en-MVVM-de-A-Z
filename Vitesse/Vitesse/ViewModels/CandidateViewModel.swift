@@ -29,7 +29,8 @@ final class CandidateViewModel: ObservableObject {
     @Published var candidateNote: String = ""
     @Published var loadState: LoadState = .idle
     @Published var lastError: String? = nil
-
+    @Published var isAdmin: Bool = UserDefaults.standard.bool(forKey: "is_admin")
+    
     private let repository: RepositoryProtocol
 
     init(repository: RepositoryProtocol) {
@@ -115,14 +116,25 @@ final class CandidateViewModel: ObservableObject {
         }
     }
 
-    func cancelEditing() {
-        Task { [candidateId = self.candidate.id] in
-            do {
-                try await self.fetchCandidate(candidateId: candidateId)
-            } catch {
-                // keep current fields but mark failure
-            }
-            self.isEditing = false
+    func cancelEditing() async {
+        do {
+            try await self.fetchCandidate(candidateId: self.candidate.id)
+        } catch {
+            print("Error cancelling: \(error)")
+        }
+        self.isEditing = false
+    }
+    
+    func toogleFavorite() async {
+        do {
+            _ = try await repository.updateFavoriteCandidate(id: candidate.id.uuidString)
+            try await self.fetchCandidate(candidateId: self.candidate.id)
+            lastError = nil
+        } catch {
+            let message = (error as NSError).localizedDescription
+            lastError = message
+            loadState = .failed(message)
+            print("Error toggling favorite: \(message)")
         }
     }
 }

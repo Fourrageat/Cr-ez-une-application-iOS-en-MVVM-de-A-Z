@@ -26,9 +26,23 @@ struct CandidateView: View {
                         Text("\(viewModel.candidate.firstName) \(viewModel.candidate.lastName.first.map { String($0) } ?? "").")
                             .font(.system(size: 35, weight: .bold))
                         Spacer()
-                        Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
-                            .foregroundStyle(viewModel.candidate.isFavorite ? .yellow: .primary)
-                            .font(.system(size: 35))
+                        if viewModel.isAdmin {
+                            Button {
+                                Task {
+                                    do {
+                                        await viewModel.toogleFavorite()
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
+                                    .foregroundStyle(viewModel.candidate.isFavorite ? .yellow : .primary)
+                                    .font(.system(size: 35))
+                            }
+                        } else {
+                            Image(systemName: viewModel.candidate.isFavorite ? "star.fill" : "star")
+                                .foregroundStyle(viewModel.candidate.isFavorite ? .yellow: .primary)
+                                .font(.system(size: 35))
+                        }
                     }
 
                     if viewModel.isEditing {
@@ -54,9 +68,7 @@ struct CandidateView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
                         Task {
-                            do {
-                                viewModel.cancelEditing()
-                            }
+                            await viewModel.cancelEditing()
                         }
                     } label: {
                         Text("Cancel")
