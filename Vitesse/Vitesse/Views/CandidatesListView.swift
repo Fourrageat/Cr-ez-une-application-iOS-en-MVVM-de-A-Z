@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CandidatesListView: View {
-    @StateObject private var viewModel = CandidatesListViewModel()
+    @StateObject private var viewModel = CandidatesListViewModel(repository: Repository())
 
     var body: some View {
         NavigationStack {

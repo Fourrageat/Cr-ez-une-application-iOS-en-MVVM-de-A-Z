@@ -10,6 +10,7 @@
 		F41E17132F0D8262007E1350 /* AuthenticationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */; };
 		F41E17152F0D9EC6007E1350 /* MockRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17142F0D9EAF007E1350 /* MockRepository.swift */; };
 		F41E17192F0DA479007E1350 /* RegisterViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */; };
+		F41E171F2F0E982B007E1350 /* CandidateListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E171E2F0E9813007E1350 /* CandidateListViewModelTests.swift */; };
 		F425035C2EE09F99007D79A1 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035B2EE09F8E007D79A1 /* RegisterView.swift */; };
 		F425035E2EE1BADD007D79A1 /* CandidatesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */; };
 		F42503602EE1D18F007D79A1 /* CandidateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425035F2EE1D18F007D79A1 /* CandidateView.swift */; };
@@ -54,6 +55,7 @@
 		F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModelTests.swift; sourceTree = "<group>"; };
 		F41E17142F0D9EAF007E1350 /* MockRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepository.swift; sourceTree = "<group>"; };
 		F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModelTests.swift; sourceTree = "<group>"; };
+		F41E171E2F0E9813007E1350 /* CandidateListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateListViewModelTests.swift; sourceTree = "<group>"; };
 		F425035B2EE09F8E007D79A1 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		F425035D2EE1BACA007D79A1 /* CandidatesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesListView.swift; sourceTree = "<group>"; };
 		F425035F2EE1D18F007D79A1 /* CandidateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateView.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 		F42503692EE1F7FE007D79A1 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
 		F425036B2EE1FA13007D79A1 /* CandidatesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesList.swift; sourceTree = "<group>"; };
 		F425036D2EE2010B007D79A1 /* Candidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
+		F427D4B02F0EF59500524853 /* Vitesse.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Vitesse.xctestplan; sourceTree = "<group>"; };
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +111,7 @@
 		F41E17112F0D81C1007E1350 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F41E171E2F0E9813007E1350 /* CandidateListViewModelTests.swift */,
 				F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */,
 				F41E17142F0D9EAF007E1350 /* MockRepository.swift */,
 				F41E17122F0D823C007E1350 /* AuthenticationViewModelTests.swift */,
@@ -138,6 +142,7 @@
 		F43C17A92EDF7909009D9423 = {
 			isa = PBXGroup;
 			children = (
+				F427D4B02F0EF59500524853 /* Vitesse.xctestplan */,
 				F43C17DF2EDF7B5C009D9423 /* Vitesse */,
 				F41E17112F0D81C1007E1350 /* Tests */,
 				F43C17B32EDF7909009D9423 /* Products */,
@@ -389,6 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41E171F2F0E982B007E1350 /* CandidateListViewModelTests.swift in Sources */,
 				F41E17192F0DA479007E1350 /* RegisterViewModelTests.swift in Sources */,
 				F41E17132F0D8262007E1350 /* AuthenticationViewModelTests.swift in Sources */,
 				F41E17152F0D9EC6007E1350 /* MockRepository.swift in Sources */,

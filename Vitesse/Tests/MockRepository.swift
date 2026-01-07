@@ -11,6 +11,13 @@ import Foundation
 /// You can control each API call outcome by toggling the corresponding flags
 /// and setting the returned values below.
 final class MockRepository: RepositoryProtocol {
+    
+    static let defaultCandidates: [Candidate] = [
+        Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: nil, email: "a@a.com", note: nil, linkedinURL: nil),
+        Candidate(firstName: "Bob", lastName: "Durand", isFavorite: false, phone: nil, email: "b@b.com", note: nil, linkedinURL: nil),
+        Candidate(firstName: "Chloe", lastName: "Bernard", isFavorite: false, phone: nil, email: "c@c.com", note: nil, linkedinURL: nil)
+    ]
+
     // MARK: - Scenario controls
     // Login
     var loginShouldSucceed: Bool = true
@@ -24,18 +31,18 @@ final class MockRepository: RepositoryProtocol {
 
     // Fetch candidates (list)
     var fetchCandidatesShouldSucceed: Bool = true
-    var fetchCandidatesResult: [Candidate] = []
-    var fetchCandidatesError: Error = NSError(domain: "Candidate", code: 500, userInfo: [NSLocalizedDescriptionKey: "Server error"])    
+    var fetchCandidatesResult: [Candidate] = MockRepository.defaultCandidates
+    var fetchCandidatesError: Error = NSError(domain: "Candidate", code: 500, userInfo: [NSLocalizedDescriptionKey: "Server error"])
 
     // Fetch single candidate
     var fetchCandidateShouldSucceed: Bool = true
-    var fetchCandidateResult: Candidate = Candidate(id: UUID(), firstName: "John", lastName: "Doe", phone: nil, email: "john.doe@example.com", note: nil, linkedinURL: nil)
-    var fetchCandidateError: Error = NSError(domain: "Candidate", code: 404, userInfo: [NSLocalizedDescriptionKey: "Not found"])    
+    var fetchCandidateResult: Candidate = MockRepository.defaultCandidates.first!
+    var fetchCandidateError: Error = NSError(domain: "Candidate", code: 404, userInfo: [NSLocalizedDescriptionKey: "Not found"])
 
     // Update candidate
     var updateCandidateShouldSucceed: Bool = true
-    var updateCandidateResult: Candidate = Candidate(id: UUID(), firstName: "John", lastName: "Doe", phone: "0000000000", email: "john.doe@example.com", note: "", linkedinURL: "")
-    var updateCandidateError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Update failed"])    
+    var updateCandidateResult: Candidate = MockRepository.defaultCandidates.first!
+    var updateCandidateError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Update failed"])
 
     // Delete candidate
     var deleteCandidateShouldSucceed: Bool = true
@@ -43,8 +50,8 @@ final class MockRepository: RepositoryProtocol {
 
     // Update favorite
     var updateFavoriteShouldSucceed: Bool = true
-    var updateFavoriteResult: Candidate = Candidate(id: UUID(), firstName: "John", lastName: "Doe", isFavorite: true, phone: nil, email: "john.doe@example.com", note: nil, linkedinURL: nil)
-    var updateFavoriteError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Favorite failed"])    
+    var updateFavoriteResult: Candidate = MockRepository.defaultCandidates.first!
+    var updateFavoriteError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Favorite failed"])
 
     // MARK: - RepositoryProtocol
 
