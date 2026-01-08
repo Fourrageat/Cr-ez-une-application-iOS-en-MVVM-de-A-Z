@@ -19,6 +19,7 @@
 		F425036A2EE1F7FE007D79A1 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42503692EE1F7FE007D79A1 /* EmptyState.swift */; };
 		F425036C2EE1FA13007D79A1 /* CandidatesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425036B2EE1FA13007D79A1 /* CandidatesList.swift */; };
 		F425036E2EE20121007D79A1 /* Candidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425036D2EE2010B007D79A1 /* Candidate.swift */; };
+		F427D4B22F0EF6EB00524853 /* CandidateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F427D4B12F0EF6DA00524853 /* CandidateTests.swift */; };
 		F43C17E02EDF7B5C009D9423 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DD2EDF7B5C009D9423 /* SignInView.swift */; };
 		F43C17E12EDF7B5C009D9423 /* VitesseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43C17DE2EDF7B5C009D9423 /* VitesseApp.swift */; };
 		F43C17E22EDF7B5C009D9423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43C17DC2EDF7B5C009D9423 /* Assets.xcassets */; };
@@ -65,6 +66,7 @@
 		F425036B2EE1FA13007D79A1 /* CandidatesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesList.swift; sourceTree = "<group>"; };
 		F425036D2EE2010B007D79A1 /* Candidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candidate.swift; sourceTree = "<group>"; };
 		F427D4B02F0EF59500524853 /* Vitesse.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Vitesse.xctestplan; sourceTree = "<group>"; };
+		F427D4B12F0EF6DA00524853 /* CandidateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidateTests.swift; sourceTree = "<group>"; };
 		F43C17B22EDF7909009D9423 /* Vitesse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitesse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17BF2EDF790A009D9423 /* VitesseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43C17C92EDF790A009D9423 /* VitesseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VitesseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,7 @@
 		F41E17112F0D81C1007E1350 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				F427D4B12F0EF6DA00524853 /* CandidateTests.swift */,
 				F41E171E2F0E9813007E1350 /* CandidateListViewModelTests.swift */,
 				F41E17182F0DA45D007E1350 /* RegisterViewModelTests.swift */,
 				F41E17142F0D9EAF007E1350 /* MockRepository.swift */,
@@ -395,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F41E171F2F0E982B007E1350 /* CandidateListViewModelTests.swift in Sources */,
+				F427D4B22F0EF6EB00524853 /* CandidateTests.swift in Sources */,
 				F41E17192F0DA479007E1350 /* RegisterViewModelTests.swift in Sources */,
 				F41E17132F0D8262007E1350 /* AuthenticationViewModelTests.swift in Sources */,
 				F41E17152F0D9EC6007E1350 /* MockRepository.swift in Sources */,

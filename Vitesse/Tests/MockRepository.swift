@@ -13,9 +13,9 @@ import Foundation
 final class MockRepository: RepositoryProtocol {
     
     static let defaultCandidates: [Candidate] = [
-        Candidate(firstName: "Alice", lastName: "Martin", isFavorite: true, phone: nil, email: "a@a.com", note: nil, linkedinURL: nil),
-        Candidate(firstName: "Bob", lastName: "Durand", isFavorite: false, phone: nil, email: "b@b.com", note: nil, linkedinURL: nil),
-        Candidate(firstName: "Chloe", lastName: "Bernard", isFavorite: false, phone: nil, email: "c@c.com", note: nil, linkedinURL: nil)
+        Candidate(id: UUID(), firstName: "Alice", lastName: "Martin", isFavorite: true, phone: nil, email: "a@a.com", note: nil, linkedinURL: nil),
+        Candidate(id: UUID(), firstName: "Bob", lastName: "Durand", isFavorite: false, phone: nil, email: "b@b.com", note: nil, linkedinURL: nil),
+        Candidate(id: UUID(), firstName: "Chloe", lastName: "Bernard", isFavorite: false, phone: nil, email: "c@c.com", note: nil, linkedinURL: nil)
     ]
 
     // MARK: - Scenario controls
@@ -46,7 +46,7 @@ final class MockRepository: RepositoryProtocol {
 
     // Delete candidate
     var deleteCandidateShouldSucceed: Bool = true
-    var deleteCandidateError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Delete failed"])    
+    var deleteCandidateError: Error = NSError(domain: "Candidate", code: 400, userInfo: [NSLocalizedDescriptionKey: "Delete failed"])
 
     // Update favorite
     var updateFavoriteShouldSucceed: Bool = true
@@ -123,7 +123,36 @@ final class MockRepository: RepositoryProtocol {
 
     func updateFavoriteCandidate(id: String) async throws -> Candidate {
         if updateFavoriteShouldSucceed {
-            return updateFavoriteResult
+            // Try to find and update in the list result first
+            if let idx = fetchCandidatesResult.firstIndex(where: { $0.id.uuidString == id }) {
+                var updated = fetchCandidatesResult[idx]
+                updated.isFavorite.toggle()
+                fetchCandidatesResult[idx] = updated
+
+                // Keep single-candidate result coherent if it refers to the same candidate
+                if fetchCandidateResult.id == updated.id {
+                    fetchCandidateResult = updated
+                }
+
+                // Update the last returned favorite result for consistency
+                updateFavoriteResult = updated
+                return updated
+            }
+
+            // Fallback: if not in the list, try updating the single-candidate result
+            if fetchCandidateResult.id.uuidString == id {
+                var updated = fetchCandidateResult
+                updated.isFavorite.toggle()
+                fetchCandidateResult = updated
+                updateFavoriteResult = updated
+                return updated
+            }
+
+            // If nothing matched by id, just return a toggled copy of updateFavoriteResult
+            var updated = updateFavoriteResult
+            updated.isFavorite.toggle()
+            updateFavoriteResult = updated
+            return updated
         } else {
             throw updateFavoriteError
         }

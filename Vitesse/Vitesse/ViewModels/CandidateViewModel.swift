@@ -51,9 +51,9 @@ final class CandidateViewModel: ObservableObject {
         self.init(repository: Repository())
     }
 
-    convenience init(candidateId: UUID, repository: RepositoryProtocol) {
+    convenience init(candidateId: UUID, repository: RepositoryProtocol) async {
         self.init(repository: repository)
-        load(candidateId: candidateId)
+        await load(candidateId: candidateId)
     }
 
     func fetchCandidate(candidateId: UUID) async throws {
@@ -77,7 +77,7 @@ final class CandidateViewModel: ObservableObject {
         }
     }
 
-    func load(candidateId: UUID) {
+    func load(candidateId: UUID) async {
         Task { [candidateId] in
             do {
                 try await fetchCandidate(candidateId: candidateId)
