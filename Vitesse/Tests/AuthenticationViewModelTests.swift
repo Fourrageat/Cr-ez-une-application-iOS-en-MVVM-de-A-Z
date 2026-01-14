@@ -9,8 +9,8 @@ struct AuthenticationViewModelTests {
 
     @Test("Initial state: not logged and no error")
     func initialState() async throws {
-        let repo = MockRepository()
-        let sut = AuthenticationViewModel(repository: repo)
+        let mockRepository = MockRepository()
+        let sut = AuthenticationViewModel(repository: mockRepository)
 
         #expect(sut.isLogged == false)
         #expect(sut.errorMessage.isEmpty)
@@ -18,10 +18,10 @@ struct AuthenticationViewModelTests {
 
     @Test("Successful login: logged and error cleared")
     func successfulLogin() async throws {
-        let repo = MockRepository()
-        repo.loginShouldSucceed = true
-        repo.loginReturnedToken = "abc123"
-        let sut = AuthenticationViewModel(repository: repo)
+        let mockRepository = MockRepository()
+        mockRepository.loginShouldSucceed = true
+        mockRepository.loginReturnedToken = "abc123"
+        let sut = AuthenticationViewModel(repository: mockRepository)
 
         // Provide credentials via the view model API used in production
         sut.email = "user@example.com"
