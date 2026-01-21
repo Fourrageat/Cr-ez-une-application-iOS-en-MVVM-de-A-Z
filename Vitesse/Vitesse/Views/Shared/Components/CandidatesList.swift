@@ -19,14 +19,13 @@ public struct CandidatesList: View {
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: 12, pinnedViews: []) {
-                ForEach(candidates) { candidate in
+                ForEach(candidates, id: \.id) { candidate in
                     HStack(spacing: 0) {
                         if isEditing {
                             Image(systemName: selectedIDs.contains(candidate.id) ? "checkmark.circle.fill" : "circle")
                                 .foregroundStyle(selectedIDs.contains(candidate.id) ? Color.accentColor : Color.secondary)
                                 .padding(.leading, 15)
                         }
-                        
                         NavigationLink(destination: CandidateView(candidate: candidate)) {
                             CandidateCard(candidate: candidate)
                                 .padding(.horizontal)
@@ -58,3 +57,4 @@ struct CandidatesListView_Previews: PreviewProvider {
         }
     }
 }
+

@@ -10,10 +10,12 @@ import SwiftUI
 struct CandidateView: View {
     private let candidate: Candidate
 
-    @ObservedObject private var viewModel = CandidateViewModel()
+    @StateObject private var viewModel: CandidateViewModel
 
     init(candidate: Candidate) {
         self.candidate = candidate
+        self._viewModel = StateObject(wrappedValue: CandidateViewModel())
+
     }
     
     var body: some View {

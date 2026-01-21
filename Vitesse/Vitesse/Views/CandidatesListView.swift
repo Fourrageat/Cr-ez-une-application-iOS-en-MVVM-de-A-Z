@@ -36,15 +36,14 @@ struct CandidatesListView: View {
 
     private var content: some View {
         VStack(spacing: 0) {
+            SearchField(text: $viewModel.search)
+                .onChange(of: viewModel.search) { newValue in
+                    viewModel.searchFilter(newValue)
+                }
             if viewModel.candidates.isEmpty {
                 EmptyState()
             } else {
                 VStack(spacing: 8) {
-                    SearchField(text: $viewModel.search)
-                        .onChange(of: viewModel.search) { newValue in
-                            viewModel.searchFilter(newValue)
-                        }
-
                     CandidatesList(
                         candidates: viewModel.candidates,
                         isEditing: viewModel.isEditing,
