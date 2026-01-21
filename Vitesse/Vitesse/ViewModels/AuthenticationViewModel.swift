@@ -14,9 +14,9 @@ class AuthenticationViewModel: ObservableObject {
     @Published var isLogged: Bool = false
     @Published var errorMessage: String = ""
     
-    private let repository: Repository
+    private let repository: RepositoryProtocol
 
-    init(repository: Repository) {
+    init(repository: RepositoryProtocol) {
         self.repository = repository
     }
     
@@ -44,3 +44,4 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 }
+

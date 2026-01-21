@@ -8,13 +8,14 @@ final class CandidatesListViewModel: ObservableObject {
     @Published var selectedIDs: Set<UUID> = []
     @Published var showFavoritesOnly: Bool = false
     
-    let repository: RepositoryProtocol = Repository()
+    let repository: RepositoryProtocol
     
-    private var allCandidates: [Candidate]
+    var allCandidates: [Candidate]
     
-    init(candidates: [Candidate] = []) {
+    init(candidates: [Candidate] = [], repository: RepositoryProtocol) {
         self.candidates = candidates
         self.allCandidates = candidates
+        self.repository = repository
     }
     
     func getCandidates() async throws {

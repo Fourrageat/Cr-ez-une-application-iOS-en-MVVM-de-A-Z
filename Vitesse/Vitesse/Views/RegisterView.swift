@@ -203,12 +203,12 @@ struct RegisterView: View {
             VStack(spacing: 8) {
                 Text("Register")
                     .font(.title2).bold()
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(.secondary)
             }
             .opacity(isKeyboardVisible ? 0 : 1)
             .offset(y: isKeyboardVisible ? -20 : 0)
             .animation(.easeInOut(duration: 0.25), value: isKeyboardVisible)
-            .padding(.top, 40)
+            .padding(.top, 80)
             .padding(.horizontal)
         }
         .onAppear {
@@ -256,7 +256,7 @@ struct RegisterView: View {
             // Call into the view model to perform login using its own email/password state
             try await viewModel.register()
 
-            if viewModel.isLogged {
+            if viewModel.isRegistered {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     showError = false
                     isCreating = false

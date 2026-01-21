@@ -16,11 +16,11 @@ class RegisterViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var passwordConfirmation: String = ""
     
-    @Published var isLogged: Bool = false
+    @Published var isRegistered: Bool = false
     
-    private let repository: Repository
+    private let repository: RepositoryProtocol
 
-    init(repository: Repository) {
+    init(repository: RepositoryProtocol) {
         self.repository = repository
     }
     
@@ -55,10 +55,11 @@ class RegisterViewModel: ObservableObject {
             password = ""
             passwordConfirmation = ""
             
-            isLogged = true
+            isRegistered = true
         } catch {
 
-            isLogged = false
+            isRegistered = false
         }
     }
 }
+
